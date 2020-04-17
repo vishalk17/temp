@@ -1,5 +1,6 @@
+  
 /*
-* Copyright (C) 2016 MediaTek Inc.
+* Copyright (C) 2011-2014 MediaTek Inc.
 *
 * This program is free software: you can redistribute it and/or modify it under the terms of the
 * GNU General Public License version 2 as published by the Free Software Foundation.
@@ -65,10 +66,10 @@ static UINT32 gDbgLevel = BT_LOG_INFO;
 #define VERSION "2.0"
 
 #define COMBO_IOC_MAGIC             0xb0
-#define COMBO_IOCTL_FW_ASSERT       _IOW(COMBO_IOC_MAGIC, 0, int)
-#define COMBO_IOCTL_BT_SET_PSM      _IOW(COMBO_IOC_MAGIC, 1, bool)
-#define COMBO_IOCTL_BT_IC_HW_VER    _IOR(COMBO_IOC_MAGIC, 2, void*)
-#define COMBO_IOCTL_BT_IC_FW_VER    _IOR(COMBO_IOC_MAGIC, 3, void*)
+#define COMBO_IOCTL_FW_ASSERT       _IOWR(COMBO_IOC_MAGIC, 0, int)
+#define COMBO_IOCTL_BT_SET_PSM      _IOWR(COMBO_IOC_MAGIC, 1, bool)
+#define COMBO_IOCTL_BT_IC_HW_VER    _IOWR(COMBO_IOC_MAGIC, 2, void*)
+#define COMBO_IOCTL_BT_IC_FW_VER    _IOWR(COMBO_IOC_MAGIC, 3, void*)
 
 #define BT_BUFFER_SIZE              2048
 #define FTRACE_STR_LOG_SIZE         256
@@ -86,7 +87,7 @@ static INT32 BT_devs = 1;
 static INT32 BT_major = BT_DEV_MAJOR;
 module_param(BT_major, uint, 0);
 static struct cdev BT_cdev;
-#if REMOVE_MK_NODE
+#if WMT_CREATE_NODE_DYNAMIC
 static struct class *stpbt_class;
 static struct device *stpbt_dev;
 #endif
@@ -164,7 +165,7 @@ static VOID bt_cdev_rst_cb(ENUM_WMTDRV_TYPE_T src,
 
 	memcpy((PINT8)&rst_msg, (PINT8)buf, sz);
 	BT_LOG_PR_DBG("src = %d, dst = %d, type = %d, buf = 0x%x sz = %d, max = %d\n",
-		    src, dst, type, rst_msg, sz, WMTRSTMSG_RESET_MAX);
+		       src, dst, type, rst_msg, sz, WMTRSTMSG_RESET_MAX);
 	if ((src == WMTDRV_TYPE_WMT) && (dst == WMTDRV_TYPE_BT) && (type == WMTMSG_TYPE_RESET)) {
 		switch (rst_msg) {
 		case WMTRSTMSG_RESET_START:
@@ -291,14 +292,14 @@ ssize_t send_hci_frame(const PUINT8 buff, size_t count)
 	return retval;
 }
 
-ssize_t BT_write_aio(struct kiocb *iocb, const struct iovec *iov, unsigned long nr_segs, loff_t f_pos)
+ssize_t BT_aio_write(struct kiocb *iocb, const struct iovec *iov, unsigned long nr_segs, loff_t f_pos)
 {
 	INT32 retval = 0;
 	size_t count = iov_length(iov, nr_segs);
 
 	down(&wr_mtx);
 
-	BT_LOG_PR_DBG("count %zd, f_pos %lld", count, f_pos);
+	BT_LOG_PR_DBG("%s: count %zd pos %lld\n", __func__, count, f_pos);
 
 	if (rstflag) {
 		BT_LOG_PR_ERR("whole chip reset occurs! rstflag=%d\n", rstflag);
@@ -325,7 +326,19 @@ ssize_t BT_write_aio(struct kiocb *iocb, const struct iovec *iov, unsigned long 
 			seg--;
 		}
 
-		retval = __bt_write(o_buf, count);
+		BT_LOG_PR_DBG("%s: before mtk_wcn_stp_send_data ofs %zd\n", __func__, ofs);
+		retval = mtk_wcn_stp_send_data(o_buf, count, BT_TASK_INDX);
+
+		if (retval < 0)
+			BT_LOG_PR_ERR("mtk_wcn_stp_send_data fail, retval %d\n", retval);
+		else if (retval == 0) {
+			/* Device cannot process data in time, STP queue is full and no space is available for write,
+			 * native program should not call write with no delay.
+			 */
+			BT_LOG_PR_ERR("write count %zd, sent bytes %d, no space is available!\n", count, retval);
+			retval = -EAGAIN;
+		} else
+			BT_LOG_PR_DBG("write count %zd, sent bytes %d\n", count, retval);
 	}
 
 OUT:
@@ -586,7 +599,7 @@ const struct file_operations BT_fops = {
 	.release = BT_close,
 	.read = BT_read,
 	.write = BT_write,
-	.aio_write = BT_write_aio,
+	.aio_write = BT_aio_write,
 	/* .ioctl = BT_ioctl, */
 	.unlocked_ioctl = BT_unlocked_ioctl,
 	.compat_ioctl = BT_compat_ioctl,
@@ -618,7 +631,7 @@ static int BT_init(void)
 	if (cdev_err)
 		goto error;
 
-#if REMOVE_MK_NODE
+#if WMT_CREATE_NODE_DYNAMIC /* mknod replace */
 	stpbt_class = class_create(THIS_MODULE, "stpbt");
 	if (IS_ERR(stpbt_class))
 		goto error;
@@ -632,7 +645,7 @@ static int BT_init(void)
 	return 0;
 
 error:
-#if REMOVE_MK_NODE
+#if WMT_CREATE_NODE_DYNAMIC
 	if (stpbt_dev && !IS_ERR(stpbt_dev)) {
 		device_destroy(stpbt_class, dev);
 		stpbt_dev = NULL;
@@ -653,11 +666,12 @@ error:
 
 static void BT_exit(void)
 {
+
 	dev_t dev = MKDEV(BT_major, 0);
 	/* Destroy wake lock*/
 	wakeup_source_trash(&bt_wakelock);
 
-#if REMOVE_MK_NODE
+#if WMT_CREATE_NODE_DYNAMIC
 	if (stpbt_dev && !IS_ERR(stpbt_dev)) {
 		device_destroy(stpbt_class, dev);
 		stpbt_dev = NULL;
