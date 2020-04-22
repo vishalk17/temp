@@ -1,0 +1,1439 @@
+
+C:\Users\vishalk17\Desktop\rom>adb shell
+x3:/ # iptables -A PREROUTING -p tcp --dport 21 -i wlan0 -j CT --helper ftp
+iptables: No chain/target/match by that name.
+1|x3:/ # iptables -A PREROUTING -p tcp --dport 21 -i wlan0 -j CT --helper tcp
+iptables: No chain/target/match by that name.
+1|x3:/ # iptables
+iptables v1.6.1: no command specified
+Try `iptables -h' or 'iptables --help' for more information.
+2|x3:/ # iptables  -h
+iptables v1.6.1
+
+Usage: iptables -[ACD] chain rule-specification [options]
+       iptables -I chain [rulenum] rule-specification [options]
+       iptables -R chain rulenum rule-specification [options]
+       iptables -D chain rulenum [options]
+       iptables -[LS] [chain [rulenum]] [options]
+       iptables -[FZ] [chain] [options]
+       iptables -[NX] chain
+       iptables -E old-chain-name new-chain-name
+       iptables -P chain target [options]
+       iptables -h (print this help information)
+
+Commands:
+Either long or short options are allowed.
+  --append  -A chain            Append to chain
+  --check   -C chain            Check for the existence of a rule
+  --delete  -D chain            Delete matching rule from chain
+  --delete  -D chain rulenum
+                                Delete rule rulenum (1 = first) from chain
+  --insert  -I chain [rulenum]
+                                Insert in chain as rulenum (default 1=first)
+  --replace -R chain rulenum
+                                Replace rule rulenum (1 = first) in chain
+  --list    -L [chain [rulenum]]
+                                List the rules in a chain or all chains
+  --list-rules -S [chain [rulenum]]
+                                Print the rules in a chain or all chains
+  --flush   -F [chain]          Delete all rules in  chain or all chains
+  --zero    -Z [chain [rulenum]]
+                                Zero counters in chain or all chains
+  --new     -N chain            Create a new user-defined chain
+  --delete-chain
+            -X [chain]          Delete a user-defined chain
+  --policy  -P chain target
+                                Change policy on chain to target
+  --rename-chain
+            -E old-chain new-chain
+                                Change chain name, (moving any references)
+Options:
+    --ipv4      -4              Nothing (line is ignored by ip6tables-restore)
+    --ipv6      -6              Error (line is ignored by iptables-restore)
+[!] --protocol  -p proto        protocol: by number or name, eg. `tcp'
+[!] --source    -s address[/mask][...]
+                                source specification
+[!] --destination -d address[/mask][...]
+                                destination specification
+[!] --in-interface -i input name[+]
+                                network interface name ([+] for wildcard)
+ --jump -j target
+                                target for rule (may load target extension)
+  --goto      -g chain
+                              jump to chain with no return
+  --match       -m match
+                                extended match (may load extension)
+  --numeric     -n              numeric output of addresses and ports
+[!] --out-interface -o output name[+]
+                                network interface name ([+] for wildcard)
+  --table       -t table        table to manipulate (default: `filter')
+  --verbose     -v              verbose mode
+  --wait        -w [seconds]    maximum wait to acquire xtables lock before give up
+  --wait-interval -W [usecs]    wait time to try to acquire xtables lock
+                                default is 1 second
+  --line-numbers                print line numbers when listing
+  --exact       -x              expand numbers (display exact values)
+[!] --fragment  -f              match second or further fragments only
+  --modprobe=<command>          try to insert modules using this command
+  --set-counters PKTS BYTES     set the counter during insert/append
+[!] --version   -V              print package version.
+x3:/ # iptables -t nat -A PREROUTING -p tcp --dport 21 -i wlan0 -j CT --helper ftp
+iptables: Invalid argument. Run `dmesg' for more information.
+1|x3:/ # dmesg
+[32m[  618.882422] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  618.882429] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  618.882438] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  618.882446] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  618.885496] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  618.897864] [0m(0)[167:kworker/0:1][battery]
+[32m[  618.897871] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  618.910480] [0m(0)[167:kworker/0:1][battery]
+[32m[  623.063455] [0m-(0)[74:cfinteractive][printk_delayed:start]
+[32m[  623.063483] [33m-(0)[74:cfinteractive][WDK][0m: kick Ex WDT,RT[623057716650]
+[32m[  623.063495] [0m-(0)[74:cfinteractive][printk_delayed:done]
+[32m[  624.905157] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=614 current_time=624 duration=10
+[32m[  624.905212] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  624.947834] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  624.991272] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  624.994213] [0m(0)[355:fuelgauged][force_get_tbat] 475,474,1,147,10,45
+[32m[  624.994643] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  624.994654] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2700\x0d
+[32m[  624.994665] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x17\x0d
+[32m[  624.994676] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x6157\x0d
+[32m[  624.994732] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  624.994754] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1473,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  624.994780] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]0,85,0,2591,2539,2575,1265,-352494185-2591,2539,2575,45,44,1473,1265,99-3400,116,3599,45,44,1473,1265,100
+[32m[  624.994855] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  624.995830] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  624.995846] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:28
+[32m[  624.995890] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  624.995976] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  624.995990] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  624.996256] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  624.996267] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2700\x0d
+[32m[  624.996278] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x17\x0d
+[32m[  624.996288] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x6157\x0d
+[32m[  624.996305] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,85,0,85,2591
+[32m[  624.996501] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  624.996509] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  625.013788] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4889 AUX_VCHRIN_AP=4859
+[32m[  625.015481] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4889 AUX_VCHRIN_AP=4859
+[32m[  625.016275] [0m(0)[184:bat_routine_thr][force_get_tbat] 471,471,1,96,10,45
+[32m[  625.016550] [0m(0)[184:bat_routine_thr]AvgVbat=(4365),bat_vol=(4368),AvgI=(212),I=(205),VChr=(4889),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  625.019634] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  625.019642] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  625.019649] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  625.019657] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  625.021284] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  625.021295] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  625.021303] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  625.021918] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  625.021926] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4889, boot_mode=0\x0d
+[32m[  625.021934] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  628.960263] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  628.963266] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  628.964078] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  628.964091] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  628.964100] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  628.964108] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  628.967387] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  628.979784] [0m(0)[167:kworker/0:1][battery]
+[32m[  628.979802] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  629.250147] [0m(0)[167:kworker/0:1][battery]
+[32m[  634.191980] [33m-(0)[0:swapper/0][Power/swap] CNT(dpidle,rgidle)[0m: [0] = (0,82656), [1] = (0,45916), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  634.192009] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_cnt[0m: [by_cpu] = 475, [by_clk] = 1178, [by_tmr] = 0, [by_oth] = 0, [by_vtg] = 0,
+[32m[  634.192022] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_mask[0m: 0x00000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  634.947216] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=624 current_time=634 duration=10
+[32m[  634.947273] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  634.989899] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  635.161338] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  635.175084] [0m(0)[355:fuelgauged][force_get_tbat] 476,475,1,100,10,45
+[32m[  635.175539] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  635.175551] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x27a3\x0d
+[32m[  635.175562] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x18\x0d
+[32m[  635.175573] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x94fc\x0d
+[32m[  635.175631] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  635.175655] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1000,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  635.175683] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]0,92,0,2591,2539,2575,1257,-352494185-2591,2539,2575,45,44,1000,1257,99-3400,116,3599,45,44,1000,1257,100
+[32m[  635.175766] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  635.176755] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  635.176771] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:28
+[32m[  635.176814] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  635.176910] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  635.176923] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  635.177128] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  635.177139] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x27a3\x0d
+[32m[  635.177150] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x18\x0d
+[32m[  635.177161] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x94fc\x0d
+[32m[  635.177171] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,92,0,92,2591
+[32m[  635.177367] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  635.177375] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  635.178372] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4884 AUX_VCHRIN_AP=4851
+[32m[  635.180067] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4889 AUX_VCHRIN_AP=4859
+[32m[  635.180849] [0m(0)[184:bat_routine_thr][force_get_tbat] 476,476,1,96,10,45
+[32m[  635.181106] [0m(0)[184:bat_routine_thr]AvgVbat=(4365),bat_vol=(4368),AvgI=(212),I=(205),VChr=(4889),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  635.185044] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  635.185056] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  635.185064] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  635.185072] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  635.186710] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  635.186720] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  635.186728] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  635.187343] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  635.187350] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4889, boot_mode=0\x0d
+[32m[  635.187358] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  639.247769] [33m-(0)[0:swapper/0][Power/swap] CNT(soidle,rgidle)[0m: [0] = (0,82860), [1] = (0,45916), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  639.247808] [33m-(0)[0:swapper/0][Power/swap] soidle_block_cnt[0m: [by_cpu] = 53, [by_clk] = 0, [by_tmr] = 0, [by_oth] = 1297, [by_vtg] = 0,
+[32m[  639.247836] [33m-(0)[0:swapper/0][Power/swap] soidle_block_mask[0m: 0x02000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  639.290821] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  639.292199] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  639.292800] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  639.292808] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  639.292817] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  639.292825] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  639.296200] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  639.308545] [0m(0)[167:kworker/0:1][battery]
+[32m[  639.308553] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  639.321462] [0m(0)[167:kworker/0:1][battery]
+[32m[  643.073448] [0m-(0)[0:swapper/0][printk_delayed:start]
+[32m[  643.073467] [33m-(0)[0:swapper/0][WDK][0m: kick Ex WDT,RT[643063668343]
+[32m[  643.073473] [0m-(0)[0:swapper/0][printk_delayed:done]
+[32m[  644.977218] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=634 current_time=644 duration=10
+[32m[  644.977275] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  645.019901] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  645.191326] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  645.204922] [0m(0)[355:fuelgauged][force_get_tbat] 471,470,1,103,10,45
+[32m[  645.205347] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  645.205358] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2843\x0d
+[32m[  645.205370] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x19\x0d
+[32m[  645.205381] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0xc0a8\x0d
+[32m[  645.205448] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  645.205475] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1030,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  645.205502] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]0,95,0,2591,2539,2575,1249,-352494185-2591,2539,2575,45,44,1030,1249,99-3400,116,3599,45,44,1030,1249,100
+[32m[  645.205586] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  645.206555] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  645.206572] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  645.206616] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  645.206712] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  645.206726] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  645.206967] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  645.206979] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2843\x0d
+[32m[  645.206990] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x19\x0d
+[32m[  645.207002] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0xc0a8\x0d
+[32m[  645.207012] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,95,0,95,2591
+[32m[  645.207207] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  645.207216] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  645.211607] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4894 AUX_VCHRIN_AP=4851
+[32m[  645.213292] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4900 AUX_VCHRIN_AP=4867
+[32m[  645.215450] [0m(0)[184:bat_routine_thr][force_get_tbat] 476,476,1,97,10,45
+[32m[  645.215719] [0m(0)[184:bat_routine_thr]AvgVbat=(4366),bat_vol=(4368),AvgI=(211),I=(191),VChr=(4900),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  645.218806] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  645.218813] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  645.218821] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  645.218829] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  645.220467] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  645.220478] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  645.220485] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  645.221099] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  645.221107] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4900, boot_mode=0\x0d
+[32m[  645.221117] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  649.356380] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  649.444681] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  649.445311] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  649.445323] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  649.445332] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  649.445340] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  649.448962] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  649.461414] [0m(0)[167:kworker/0:1][battery]
+[32m[  649.461432] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  649.731242] [0m(0)[167:kworker/0:1][battery]
+[32m[  652.993545] [31m(0)[1417:gsm0710muxd][ccci1/mcd]traffic(3/0):Tx(ff)4-4,2696-2695,0-0,0-0,0-0,0-0,0-0,0-0:Rx(ff)3,2085,0,0,0,0,0,0
+[32m[  652.993569] [31m(0)[1417:gsm0710muxd][ccci1/mcd]net Rx skb queue:0 0 0 / 0 0 0
+[32m[  652.993579] [33m(0)[1417:gsm0710muxd][ccci1/cor]traffic(ch)[31m: tx:[5]0, [12]1196, [15]2844 rx:[4]2, [10]904, [14]2184
+[32m[  652.993590] [33m(0)[1417:gsm0710muxd][ccci1/cor]traffic(net)[31m: tx: [22]0 0, [26]0 0, [30]0 0, rx:[20]0, [24]0, [28]0
+[32m[  655.005076] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=644 current_time=655 duration=11
+[32m[  655.005137] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  655.047788] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  655.048944] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  655.063589] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4828 AUX_VCHRIN_AP=4796
+[32m[  655.064935] [0m(0)[355:fuelgauged][force_get_tbat] 478,478,1,99,10,44
+[32m[  655.065358] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  655.065370] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x28e1\x0d
+[32m[  655.065380] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x1a\x0d
+[32m[  655.065390] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0xeba1\x0d
+[32m[  655.065449] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  655.065472] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,991,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  655.065500] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]0,100,0,2591,2539,2576,1221,-352494185-2591,2539,2576,44,44,991,1221,99-3400,116,3599,44,44,991,1221,100
+[32m[  655.065572] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  655.069942] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:11 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  655.069959] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  655.070003] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  655.070077] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  655.070089] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:11 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  655.070299] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  655.070310] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x28e1\x0d
+[32m[  655.070321] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x1a\x0d
+[32m[  655.070332] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0xeba1\x0d
+[32m[  655.070341] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,100,0,100,2591
+[32m[  655.070540] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  655.070562] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  655.073075] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4830 AUX_VCHRIN_AP=4859
+[32m[  655.075919] [0m(0)[184:bat_routine_thr][force_get_tbat] 472,472,1,84,10,45
+[32m[  655.076200] [0m(0)[184:bat_routine_thr]AvgVbat=(4366),bat_vol=(4368),AvgI=(209),I=(205),VChr=(4830),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  655.080466] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  655.080484] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  655.080492] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  655.080501] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  655.082150] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  655.082161] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  655.082168] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  655.082784] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  655.082791] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4830, boot_mode=0\x0d
+[32m[  655.082798] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  659.789764] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  659.961861] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  659.962463] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  659.962470] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  659.962479] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  659.962487] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  659.965532] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  659.977874] [0m(0)[167:kworker/0:1][battery]
+[32m[  659.977881] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  659.990217] [0m(0)[167:kworker/0:1][battery]
+[32m[  663.093456] [0m-(0)[74:cfinteractive][printk_delayed:start]
+[32m[  663.093485] [33m-(0)[74:cfinteractive][WDK][0m: kick Ex WDT,RT[663088615191]
+[32m[  663.093498] [0m-(0)[74:cfinteractive][printk_delayed:done]
+[32m[  664.193481] [33m-(0)[0:swapper/0][Power/swap] CNT(dpidle,rgidle)[0m: [0] = (0,84103), [1] = (0,45916), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  664.193508] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_cnt[0m: [by_cpu] = 0, [by_clk] = 1447, [by_tmr] = 0, [by_oth] = 0, [by_vtg] = 0,
+[32m[  664.193520] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_mask[0m: 0x00000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  665.017205] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=655 current_time=665 duration=10
+[32m[  665.017263] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  665.059882] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  665.231299] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  665.244793] [0m(0)[355:fuelgauged][force_get_tbat] 471,470,1,100,10,45
+[32m[  665.245223] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  665.245235] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2984\x0d
+[32m[  665.245246] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x1c\x0d
+[32m[  665.245257] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x1b21\x0d
+[32m[  665.245320] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  665.245344] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1002,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  665.245371] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]0,104,0,2591,2539,2576,1202,-352494185-2591,2539,2576,45,44,1002,1202,99-3400,116,3599,45,44,1002,1202,100
+[32m[  665.245445] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  665.246429] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  665.246444] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  665.246491] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  665.246583] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  665.246597] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  665.246807] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  665.246818] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2984\x0d
+[32m[  665.246829] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x1c\x0d
+[32m[  665.246839] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x1b21\x0d
+[32m[  665.246850] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,104,0,104,2591
+[32m[  665.247043] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  665.247052] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  665.248497] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4872 AUX_VCHRIN_AP=4835
+[32m[  665.250250] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4870 AUX_VCHRIN_AP=4843
+[32m[  665.250925] [0m(0)[184:bat_routine_thr][force_get_tbat] 475,475,1,97,10,45
+[32m[  665.251243] [0m(0)[184:bat_routine_thr]AvgVbat=(4366),bat_vol=(4370),AvgI=(208),I=(191),VChr=(4870),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  665.254963] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  665.254974] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  665.254982] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  665.254990] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  665.256622] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  665.256633] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  665.256641] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  665.257255] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  665.257263] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4870, boot_mode=0\x0d
+[32m[  665.257271] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  669.320566] [33m-(0)[0:swapper/0][Power/swap] CNT(soidle,rgidle)[0m: [0] = (0,84325), [1] = (0,45916), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  669.320605] [33m-(0)[0:swapper/0][Power/swap] soidle_block_cnt[0m: [by_cpu] = 0, [by_clk] = 0, [by_tmr] = 0, [by_oth] = 1465, [by_vtg] = 0,
+[32m[  669.320632] [33m-(0)[0:swapper/0][Power/swap] soidle_block_mask[0m: 0x02000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  669.993456] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  669.994532] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  669.995133] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  669.995141] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  669.995149] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  669.995157] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  669.998734] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  670.011761] [0m(0)[167:kworker/0:1][battery]
+[32m[  670.011772] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  670.024107] [0m(0)[167:kworker/0:1][battery]
+[32m[  675.019786] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=665 current_time=675 duration=10
+[32m[  675.019843] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  675.062598] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  675.191443] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  675.204962] [0m(0)[355:fuelgauged][force_get_tbat] 474,473,1,103,10,45
+[32m[  675.205387] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  675.205398] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2a23\x0d
+[32m[  675.205411] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x1d\x0d
+[32m[  675.205423] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x475c\x0d
+[32m[  675.205483] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  675.205507] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1035,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  675.205535] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]0,107,0,2591,2539,2576,1178,-352494185-2591,2539,2576,45,44,1035,1178,99-3400,116,3599,45,44,1035,1178,100
+[32m[  675.205608] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  675.206577] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  675.206594] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  675.206642] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  675.206719] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  675.206733] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  675.206941] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  675.206952] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2a23\x0d
+[32m[  675.206962] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x1d\x0d
+[32m[  675.206973] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x475c\x0d
+[32m[  675.206983] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,107,0,107,2591
+[32m[  675.207181] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  675.207189] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  675.208755] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4892 AUX_VCHRIN_AP=4867
+[32m[  675.210630] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4883 AUX_VCHRIN_AP=4835
+[32m[  675.211270] [0m(0)[184:bat_routine_thr][force_get_tbat] 472,472,1,96,10,45
+[32m[  675.211533] [0m(0)[184:bat_routine_thr]AvgVbat=(4366),bat_vol=(4370),AvgI=(206),I=(205),VChr=(4883),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  675.216025] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  675.216036] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  675.216044] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  675.216052] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  675.217689] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  675.217701] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  675.217709] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  675.218324] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  675.218331] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4883, boot_mode=0\x0d
+[32m[  675.218339] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  680.075555] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  680.163575] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  680.164377] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  680.164388] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  680.164398] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  680.164405] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  680.168453] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  680.181812] [0m(0)[167:kworker/0:1][battery]
+[32m[  680.181829] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  680.451512] [0m(0)[167:kworker/0:1][battery]
+[32m[  683.103452] [0m-(0)[74:cfinteractive][printk_delayed:start]
+[32m[  683.103478] [33m-(0)[74:cfinteractive][WDK][0m: kick Ex WDT,RT[683093576346]
+[32m[  683.103490] [0m-(0)[74:cfinteractive][printk_delayed:done]
+[32m[  685.047603] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=675 current_time=685 duration=10
+[32m[  685.047659] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  685.090293] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  685.109690] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  685.126784] [0m(0)[355:fuelgauged][force_get_tbat] 477,476,1,102,10,45
+[32m[  685.127348] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  685.127360] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2ac2\x0d
+[32m[  685.127371] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x1e\x0d
+[32m[  685.127382] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x716c\x0d
+[32m[  685.127442] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  685.127468] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1024,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  685.127496] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]0,113,0,2591,2539,2576,1178,-352494185-2591,2539,2576,45,44,1024,1178,99-3400,116,3599,45,44,1024,1178,100
+[32m[  685.127570] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  685.128615] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  685.128633] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  685.128678] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  685.128770] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  685.128783] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  685.129023] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  685.129034] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2ac2\x0d
+[32m[  685.129044] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x1e\x0d
+[32m[  685.129055] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x716c\x0d
+[32m[  685.129065] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,113,0,113,2591
+[32m[  685.129263] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  685.129271] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  685.142286] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4885 AUX_VCHRIN_AP=4859
+[32m[  685.144010] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4889 AUX_VCHRIN_AP=4843
+[32m[  685.144739] [0m(0)[184:bat_routine_thr][force_get_tbat] 475,475,1,87,10,45
+[32m[  685.145007] [0m(0)[184:bat_routine_thr]AvgVbat=(4366),bat_vol=(4367),AvgI=(206),I=(191),VChr=(4889),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  685.148087] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  685.148094] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  685.148101] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  685.148110] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  685.150038] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  685.150050] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  685.150058] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  685.150679] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  685.150687] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4889, boot_mode=0\x0d
+[32m[  685.150695] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  690.499754] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  690.672472] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  690.673097] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  690.673106] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  690.673115] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  690.673123] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  690.676219] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  690.945855] [0m(0)[167:kworker/0:1][battery]
+[32m[  690.945866] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  690.958212] [0m(0)[167:kworker/0:1][battery]
+[32m[  694.396320] [33m-(0)[0:swapper/0][Power/swap] CNT(dpidle,rgidle)[0m: [0] = (0,85582), [1] = (0,45916), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  694.396349] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_cnt[0m: [by_cpu] = 0, [by_clk] = 1479, [by_tmr] = 0, [by_oth] = 0, [by_vtg] = 0,
+[32m[  694.396361] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_mask[0m: 0x00000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  695.047606] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=685 current_time=695 duration=10
+[32m[  695.047650] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  695.048221] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  695.048877] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  695.064135] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4815 AUX_VCHRIN_AP=4820
+[32m[  695.065324] [0m(0)[355:fuelgauged][force_get_tbat] 478,477,1,103,10,44
+[32m[  695.065752] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  695.065763] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2b61\x0d
+[32m[  695.065775] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x1f\x0d
+[32m[  695.065787] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x9a59\x0d
+[32m[  695.065843] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  695.065866] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1023,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  695.065893] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]0,116,0,2591,2539,2576,1178,-352494185-2591,2539,2576,44,44,1023,1178,99-3400,116,3599,44,44,1023,1178,100
+[32m[  695.065969] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  695.066944] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  695.066961] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  695.067005] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  695.067086] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  695.067100] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  695.067306] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  695.067318] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2b61\x0d
+[32m[  695.067329] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x1f\x0d
+[32m[  695.067339] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x9a59\x0d
+[32m[  695.067349] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,116,0,116,2591
+[32m[  695.067552] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  695.067560] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  695.068068] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4890 AUX_VCHRIN_AP=4859
+[32m[  695.068741] [0m(0)[184:bat_routine_thr][force_get_tbat] 478,478,1,95,10,44
+[32m[  695.069056] [0m(0)[184:bat_routine_thr]AvgVbat=(4366),bat_vol=(4370),AvgI=(205),I=(191),VChr=(4890),AvgT=(44),T=(44),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  695.072136] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  695.072143] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  695.072151] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  695.072159] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  695.075521] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  695.075540] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  695.075548] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  695.076166] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  695.076174] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4890, boot_mode=0\x0d
+[32m[  695.076182] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  699.400338] [33m-(0)[0:swapper/0][Power/swap] CNT(soidle,rgidle)[0m: [0] = (0,85779), [1] = (0,45916), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  699.400377] [33m-(0)[0:swapper/0][Power/swap] soidle_block_cnt[0m: [by_cpu] = 0, [by_clk] = 0, [by_tmr] = 0, [by_oth] = 1454, [by_vtg] = 0,
+[32m[  699.400404] [33m-(0)[0:swapper/0][Power/swap] soidle_block_mask[0m: 0x02000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  700.973465] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  700.974526] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  700.975124] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  700.975131] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  700.975141] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  700.975149] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  700.978157] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  700.991178] [0m(0)[167:kworker/0:1][battery]
+[32m[  700.991189] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  701.260830] [0m(0)[167:kworker/0:1][battery]
+[32m[  703.113450] [0m-(0)[74:cfinteractive][printk_delayed:start]
+[32m[  703.113475] [33m-(0)[74:cfinteractive][WDK][0m: kick Ex WDT,RT[703105160347]
+[32m[  703.113486] [0m-(0)[74:cfinteractive][printk_delayed:done]
+[32m[  705.075150] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=695 current_time=705 duration=10
+[32m[  705.075208] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  705.160382] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  705.161460] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  705.166028] [0m(0)[355:fuelgauged][force_get_tbat] 474,473,1,118,10,45
+[32m[  705.166485] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  705.166496] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2c03\x0d
+[32m[  705.166507] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x20\x0d
+[32m[  705.166519] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0xc978\x0d
+[32m[  705.166585] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  705.166610] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1183,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  705.166637] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]0,121,0,2591,2539,2576,1183,-352494185-2591,2539,2576,45,44,1183,1183,99-3400,116,3599,45,44,1183,1183,100
+[32m[  705.166710] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  705.173827] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  705.173845] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  705.173894] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  705.173983] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  705.173997] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  705.174199] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  705.174210] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2c03\x0d
+[32m[  705.174221] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x20\x0d
+[32m[  705.174236] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0xc978\x0d
+[32m[  705.174246] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,121,0,121,2591
+[32m[  705.174448] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  705.174456] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  705.180559] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4817 AUX_VCHRIN_AP=4789
+[32m[  705.182263] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4821 AUX_VCHRIN_AP=4796
+[32m[  705.183052] [0m(0)[184:bat_routine_thr][force_get_tbat] 478,478,1,83,10,44
+[32m[  705.183322] [0m(0)[184:bat_routine_thr]AvgVbat=(4366),bat_vol=(4364),AvgI=(205),I=(205),VChr=(4821),AvgT=(44),T=(44),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  705.186404] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  705.186412] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  705.186420] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  705.186428] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  705.188069] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  705.188079] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  705.188087] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  705.188702] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  705.188710] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4821, boot_mode=0\x0d
+[32m[  705.188718] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  711.312200] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  711.441813] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  711.442414] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  711.442422] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  711.442431] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  711.442438] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  711.445494] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  711.715074] [0m(0)[167:kworker/0:1][battery]
+[32m[  711.715082] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  711.727441] [0m(0)[167:kworker/0:1][battery]
+[32m[  715.095182] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=705 current_time=715 duration=10
+[32m[  715.095246] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  715.137825] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  715.181516] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  715.194826] [0m(0)[355:fuelgauged][force_get_tbat] 475,474,1,100,10,45
+[32m[  715.195257] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  715.195269] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2ca3\x0d
+[32m[  715.195280] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x21\x0d
+[32m[  715.195291] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0xf5ad\x0d
+[32m[  715.195348] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  715.195372] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1002,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  715.195401] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]0,125,0,2591,2539,2576,1183,-352494185-2591,2539,2576,45,44,1002,1183,99-3400,116,3599,45,44,1002,1183,100
+[32m[  715.195475] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  715.196446] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  715.196462] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  715.196506] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  715.196588] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  715.196601] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  715.196839] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  715.196850] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2ca3\x0d
+[32m[  715.196860] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x21\x0d
+[32m[  715.196870] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0xf5ad\x0d
+[32m[  715.196880] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,125,0,125,2591
+[32m[  715.197078] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  715.197096] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  715.201741] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4823 AUX_VCHRIN_AP=4796
+[32m[  715.206800] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4841 AUX_VCHRIN_AP=4867
+[32m[  715.207489] [0m(0)[184:bat_routine_thr][force_get_tbat] 475,475,1,82,10,45
+[32m[  715.207759] [0m(0)[184:bat_routine_thr]AvgVbat=(4366),bat_vol=(4370),AvgI=(205),I=(191),VChr=(4841),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  715.210841] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  715.210848] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  715.210856] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  715.210865] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  715.212526] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  715.212537] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  715.212545] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  715.213158] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  715.213166] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4841, boot_mode=0\x0d
+[32m[  715.213174] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  721.450699] [33m(0)[2070:sh]sh[2070][0m: syscall 278
+[32m[  721.450721] [33m(0)[2070:sh]Code[0m: 54f4a4a8 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  721.450736] [33m(0)[2070:sh]CPU[0m: 0 PID: 2070 Comm: sh Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  721.450745] [33m(0)[2070:sh]task[0m: ffffffc0a31c5000 ti: ffffffc0a7548000 task.ti: ffffffc0a7548000
+[32m[  721.450754] [0m(0)[2070:sh]PC is at 0x6fd5c8bca4
+[32m[  721.450761] [0m(0)[2070:sh]LR is at 0x6fd5c81740
+[32m[  721.450768] [33m(0)[2070:sh]pc [0m: [<0000006fd5c8bca4>] lr : [<0000006fd5c81740>] pstate: 80000000
+[32m[  721.450775] [33m(0)[2070:sh]sp [0m: 0000007ff5f2f6a0
+[32m[  721.450782] [33m(0)[2070:sh]x29[0m: 0000007ff5f2f6e0 x28: 0000007ff5f30ad0
+[32m[  721.450794] [33m(0)[2070:sh]x27[0m: 0000000000000000 x26: 0000000000000000
+[32m[  721.450804] [33m(0)[2070:sh]x25[0m: 0000000000000000 x24: 0000000000000000
+[32m[  721.450815] [33m(0)[2070:sh]x23[0m: 0000000000000028 x22: 0000007ff5f2f6f8
+[32m[  721.450825] [33m(0)[2070:sh]x21[0m: 0000007ff5f2f6f8 x20: 0000000000000028
+[32m[  721.450835] [33m(0)[2070:sh]x19[0m: 0000006fd5d015f0 x18: 0000000000000000
+[32m[  721.450846] [33m(0)[2070:sh]x17[0m: 0000000000000000 x16: 0000000000000000
+[32m[  721.450856] [33m(0)[2070:sh]x15[0m: 0000000000000000 x14: 0000000000000000
+[32m[  721.450866] [33m(0)[2070:sh]x13[0m: 0000000000000000 x12: 0000006fd5bac708
+[32m[  721.450876] [33m(0)[2070:sh]x11[0m: 00000000000006e8 x10: 0000006fd5d01000
+[32m[  721.450886] [33m(0)[2070:sh]x9 [0m: 0000006fd5d078bc x8 : 0000000000000116
+[32m[  721.450896] [33m(0)[2070:sh]x7 [0m: 0000000000000000 x6 : 0000000000000000
+[32m[  721.450906] [33m(0)[2070:sh]x5 [0m: 0000000000000000 x4 : 0000000000000000
+[32m[  721.450916] [33m(0)[2070:sh]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  721.450925] [33m(0)[2070:sh]x1 [0m: 0000000000000028 x0 : 0000007ff5f2f6f8
+[32m[  721.450936] [0m(0)[2070:sh]
+[32m[  721.530439] [33m(0)[2070:sh]sh[2070][0m: syscall 278
+[32m[  721.530459] [33m(0)[2070:sh]Code[0m: 54ffbf08 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  721.530475] [33m(0)[2070:sh]CPU[0m: 0 PID: 2070 Comm: sh Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  721.530485] [33m(0)[2070:sh]task[0m: ffffffc0a31c5000 ti: ffffffc0a7548000 task.ti: ffffffc0a7548000
+[32m[  721.530494] [0m(0)[2070:sh]PC is at 0x6fd3dad788
+[32m[  721.530500] [0m(0)[2070:sh]LR is at 0x6fd3d64fe8
+[32m[  721.530507] [33m(0)[2070:sh]pc [0m: [<0000006fd3dad788>] lr : [<0000006fd3d64fe8>] pstate: 80000000
+[32m[  721.530513] [33m(0)[2070:sh]sp [0m: 0000007ff5f2f310
+[32m[  721.530519] [33m(0)[2070:sh]x29[0m: 0000007ff5f2f350 x28: 0000006fd3de82c0
+[32m[  721.530532] [33m(0)[2070:sh]x27[0m: 0000000000000004 x26: 0000000000000002
+[32m[  721.530543] [33m(0)[2070:sh]x25[0m: 0000006fd5cfd000 x24: 0000000000000000
+[32m[  721.530552] [33m(0)[2070:sh]x23[0m: 0000000000000028 x22: 0000007ff5f2f368
+[32m[  721.530562] [33m(0)[2070:sh]x21[0m: 0000007ff5f2f368 x20: 0000000000000028
+[32m[  721.530571] [33m(0)[2070:sh]x19[0m: 0000006fd5d015f0 x18: 0000000000000000
+[32m[  721.530582] [33m(0)[2070:sh]x17[0m: 0000006fd3dad780 x16: 0000006fd3e2f4e0
+[32m[  721.530591] [33m(0)[2070:sh]x15[0m: 0000006fd595c000 x14: 0000000000000000
+[32m[  721.530601] [33m(0)[2070:sh]x13[0m: 000000006474e550 x12: 0000006fd5cef128
+[32m[  721.530611] [33m(0)[2070:sh]x11[0m: 000000000000000d x10: 0000006fd3e36000
+[32m[  721.530621] [33m(0)[2070:sh]x9 [0m: 0000006fd3e3ba08 x8 : 0000000000000116
+[32m[  721.530631] [33m(0)[2070:sh]x7 [0m: 0000000006106114 x6 : 00060c1ee55f0034
+[32m[  721.530641] [33m(0)[2070:sh]x5 [0m: 34005f651e0c0600 x4 : 0000008000000000
+[32m[  721.530651] [33m(0)[2070:sh]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  721.530660] [33m(0)[2070:sh]x1 [0m: 0000000000000028 x0 : 0000007ff5f2f368
+[32m[  721.530670] [0m(0)[2070:sh]
+[32m[  721.767718] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  721.811845] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  721.812448] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  721.812455] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  721.812464] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  721.812471] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  721.815587] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  721.827920] [0m(0)[167:kworker/0:1][battery]
+[32m[  721.827927] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  721.840262] [0m(0)[167:kworker/0:1][battery]
+[32m[  723.123452] [0m-(0)[0:swapper/0][printk_delayed:start]
+[32m[  723.123474] [33m-(0)[0:swapper/0][WDK][0m: kick Ex WDT,RT[723113502271]
+[32m[  723.123479] [0m-(0)[0:swapper/0][printk_delayed:done]
+[32m[  724.578134] [33m(0)[2072:iptables]iptables[2072][0m: syscall 278
+[32m[  724.578155] [33m(0)[2072:iptables]Code[0m: 54f4a4a8 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  724.578169] [33m(0)[2072:iptables]CPU[0m: 0 PID: 2072 Comm: iptables Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  724.578180] [33m(0)[2072:iptables]task[0m: ffffffc05d1a8000 ti: ffffffc0a388c000 task.ti: ffffffc0a388c000
+[32m[  724.578188] [0m(0)[2072:iptables]PC is at 0x739adc7ca4
+[32m[  724.578194] [0m(0)[2072:iptables]LR is at 0x739adbd740
+[32m[  724.578202] [33m(0)[2072:iptables]pc [0m: [<000000739adc7ca4>] lr : [<000000739adbd740>] pstate: 80000000
+[32m[  724.578209] [33m(0)[2072:iptables]sp [0m: 0000007fee015230
+[32m[  724.578215] [33m(0)[2072:iptables]x29[0m: 0000007fee015270 x28: 0000007fee016660
+[32m[  724.578227] [33m(0)[2072:iptables]x27[0m: 0000000000000000 x26: 0000000000000000
+[32m[  724.578238] [33m(0)[2072:iptables]x25[0m: 0000000000000000 x24: 0000000000000000
+[32m[  724.578247] [33m(0)[2072:iptables]x23[0m: 0000000000000028 x22: 0000007fee015288
+[32m[  724.578258] [33m(0)[2072:iptables]x21[0m: 0000007fee015288 x20: 0000000000000028
+[32m[  724.578268] [33m(0)[2072:iptables]x19[0m: 000000739ae3d5f0 x18: 0000000000000000
+[32m[  724.578277] [33m(0)[2072:iptables]x17[0m: 0000000000000000 x16: 0000000000000000
+[32m[  724.578288] [33m(0)[2072:iptables]x15[0m: 0000000000000000 x14: 0000000000000000
+[32m[  724.578298] [33m(0)[2072:iptables]x13[0m: 0000000000000000 x12: 000000739ace8708
+[32m[  724.578308] [33m(0)[2072:iptables]x11[0m: 00000000000006e8 x10: 000000739ae3d000
+[32m[  724.578319] [33m(0)[2072:iptables]x9 [0m: 000000739ae438bc x8 : 0000000000000116
+[32m[  724.578328] [33m(0)[2072:iptables]x7 [0m: 0000000000000000 x6 : 0000000000000000
+[32m[  724.578339] [33m(0)[2072:iptables]x5 [0m: 0000000000000000 x4 : 0000000000000000
+[32m[  724.578348] [33m(0)[2072:iptables]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  724.578358] [33m(0)[2072:iptables]x1 [0m: 0000000000000028 x0 : 0000007fee015288
+[32m[  724.578368] [0m(0)[2072:iptables]
+[32m[  724.657333] [33m(0)[2072:iptables]iptables[2072][0m: syscall 278
+[32m[  724.657355] [33m(0)[2072:iptables]Code[0m: 54ffbf08 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  724.657369] [33m(0)[2072:iptables]CPU[0m: 0 PID: 2072 Comm: iptables Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  724.657379] [33m(0)[2072:iptables]task[0m: ffffffc05d1a8000 ti: ffffffc0a388c000 task.ti: ffffffc0a388c000
+[32m[  724.657387] [0m(0)[2072:iptables]PC is at 0x73986ed788
+[32m[  724.657394] [0m(0)[2072:iptables]LR is at 0x73986a4fe8
+[32m[  724.657402] [33m(0)[2072:iptables]pc [0m: [<00000073986ed788>] lr : [<00000073986a4fe8>] pstate: 80000000
+[32m[  724.657408] [33m(0)[2072:iptables]sp [0m: 0000007fee014ea0
+[32m[  724.657415] [33m(0)[2072:iptables]x29[0m: 0000007fee014ee0 x28: 00000073987282c0
+[32m[  724.657427] [33m(0)[2072:iptables]x27[0m: 0000000000000004 x26: 0000000000000002
+[32m[  724.657437] [33m(0)[2072:iptables]x25[0m: 000000739ae39000 x24: 0000000000000000
+[32m[  724.657447] [33m(0)[2072:iptables]x23[0m: 0000000000000028 x22: 0000007fee014ef8
+[32m[  724.657457] [33m(0)[2072:iptables]x21[0m: 0000007fee014ef8 x20: 0000000000000028
+[32m[  724.657468] [33m(0)[2072:iptables]x19[0m: 000000739ae3d5f0 x18: 0000000000000000
+[32m[  724.657477] [33m(0)[2072:iptables]x17[0m: 00000073986ed780 x16: 000000739876f4e0
+[32m[  724.657487] [33m(0)[2072:iptables]x15[0m: 000000739aa98000 x14: 0000000000000000
+[32m[  724.657496] [33m(0)[2072:iptables]x13[0m: 000000006474e550 x12: 000000739ae2b128
+[32m[  724.657507] [33m(0)[2072:iptables]x11[0m: 000000000000000d x10: 0000007398776000
+[32m[  724.657517] [33m(0)[2072:iptables]x9 [0m: 000000739877ba08 x8 : 0000000000000116
+[32m[  724.657527] [33m(0)[2072:iptables]x7 [0m: 0000000002902114 x6 : 00060c1ee55f0034
+[32m[  724.657537] [33m(0)[2072:iptables]x5 [0m: 34005f651e0c0600 x4 : 0000008000000000
+[32m[  724.657546] [33m(0)[2072:iptables]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  724.657558] [33m(0)[2072:iptables]x1 [0m: 0000000000000028 x0 : 0000007fee014ef8
+[32m[  724.657568] [0m(0)[2072:iptables]
+[32m[  724.670159] [33m-(0)[0:swapper/0][Power/swap] CNT(dpidle,rgidle)[0m: [0] = (0,87040), [1] = (0,45916), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  724.670187] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_cnt[0m: [by_cpu] = 0, [by_clk] = 1458, [by_tmr] = 0, [by_oth] = 0, [by_vtg] = 0,
+[32m[  724.670200] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_mask[0m: 0x00000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  725.119704] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=715 current_time=725 duration=10
+[32m[  725.119758] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  725.162378] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  725.291394] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  725.294468] [0m(0)[355:fuelgauged][force_get_tbat] 472,471,1,136,10,45
+[32m[  725.294913] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  725.294929] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2d45\x0d
+[32m[  725.294940] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x23\x0d
+[32m[  725.294950] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x1f7f\x0d
+[32m[  725.295010] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  725.295035] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1369,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  725.295061] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]0,128,0,2591,2539,2576,1195,-352494185-2591,2539,2576,45,44,1369,1195,99-3400,116,3599,45,44,1369,1195,100
+[32m[  725.295135] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  725.296105] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  725.296122] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  725.296166] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  725.296248] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  725.296262] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  725.296470] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  725.296481] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2d45\x0d
+[32m[  725.296492] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x23\x0d
+[32m[  725.296506] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x1f7f\x0d
+[32m[  725.296517] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,128,0,128,2591
+[32m[  725.296716] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  725.296725] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  725.315551] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4881 AUX_VCHRIN_AP=4835
+[32m[  725.317240] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4904 AUX_VCHRIN_AP=4851
+[32m[  725.317895] [0m(0)[184:bat_routine_thr][force_get_tbat] 478,478,1,92,10,44
+[32m[  725.318238] [0m(0)[184:bat_routine_thr]AvgVbat=(4366),bat_vol=(4365),AvgI=(204),I=(191),VChr=(4904),AvgT=(44),T=(44),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  725.321317] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  725.321325] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  725.321332] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  725.321340] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  725.322987] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  725.322998] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  725.323005] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  725.324222] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  725.324232] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4904, boot_mode=0\x0d
+[32m[  725.324239] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  729.677245] [33m-(0)[0:swapper/0][Power/swap] CNT(soidle,rgidle)[0m: [0] = (0,87252), [1] = (0,45916), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  729.677284] [33m-(0)[0:swapper/0][Power/swap] soidle_block_cnt[0m: [by_cpu] = 0, [by_clk] = 0, [by_tmr] = 0, [by_oth] = 1473, [by_vtg] = 0,
+[32m[  729.677312] [33m-(0)[0:swapper/0][Power/swap] soidle_block_mask[0m: 0x02000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  731.862108] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  732.000127] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  732.000765] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  732.000779] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  732.000790] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  732.000797] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  732.004273] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  732.273851] [0m(0)[167:kworker/0:1][battery]
+[32m[  732.273865] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  732.286208] [0m(0)[167:kworker/0:1][battery]
+[32m[  735.147597] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=725 current_time=735 duration=10
+[32m[  735.147653] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  735.190281] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  735.191390] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  735.205062] [0m(0)[355:fuelgauged][force_get_tbat] 478,477,1,101,10,44
+[32m[  735.205491] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  735.205504] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2de3\x0d
+[32m[  735.205517] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x24\x0d
+[32m[  735.205528] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x4a7e\x0d
+[32m[  735.205586] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  735.205609] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1019,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  735.205636] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]-1,135,0,2591,2539,2576,1175,-352494185-2591,2539,2576,44,44,1019,1175,99-3400,116,3599,44,44,1019,1175,100
+[32m[  735.205707] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  735.206676] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  735.206692] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  735.206735] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  735.206823] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  735.206837] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  735.207047] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  735.207059] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2de3\x0d
+[32m[  735.207070] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x24\x0d
+[32m[  735.207083] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x4a7e\x0d
+[32m[  735.207092] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,135,0,135,2591
+[32m[  735.207289] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  735.207297] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  735.208299] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4897 AUX_VCHRIN_AP=4867
+[32m[  735.209985] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4898 AUX_VCHRIN_AP=4859
+[32m[  735.210765] [0m(0)[184:bat_routine_thr][force_get_tbat] 471,471,1,96,10,45
+[32m[  735.211022] [0m(0)[184:bat_routine_thr]AvgVbat=(4367),bat_vol=(4371),AvgI=(204),I=(205),VChr=(4898),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  735.215033] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  735.215044] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  735.215051] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  735.215060] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  735.216696] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  735.216706] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  735.216714] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  735.217329] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  735.217337] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4898, boot_mode=0\x0d
+[32m[  735.217345] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  742.348283] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  742.392345] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  742.392945] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  742.392953] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  742.392962] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  742.392970] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  742.395983] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  742.408387] [0m(0)[167:kworker/0:1][battery]
+[32m[  742.408394] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  742.420791] [0m(0)[167:kworker/0:1][battery]
+[32m[  743.133452] [0m-(0)[74:cfinteractive][printk_delayed:start]
+[32m[  743.133473] [33m-(0)[74:cfinteractive][WDK][0m: kick Ex WDT,RT[743123501657]
+[32m[  743.133485] [0m-(0)[74:cfinteractive][printk_delayed:done]
+[32m[  745.177231] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=735 current_time=745 duration=10
+[32m[  745.177283] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  745.219905] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  745.391945] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  745.398050] [0m(0)[355:fuelgauged][force_get_tbat] 475,474,1,117,10,45
+[32m[  745.398511] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  745.398522] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2e86\x0d
+[32m[  745.398533] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x25\x0d
+[32m[  745.398544] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x7da7\x0d
+[32m[  745.398603] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  745.398627] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1177,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  745.398655] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]-1,139,0,2591,2539,2576,1156,-352494185-2591,2539,2576,45,44,1177,1156,99-3400,116,3599,45,44,1177,1156,100
+[32m[  745.398727] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  745.403820] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  745.403839] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  745.403883] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  745.403959] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  745.403973] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  745.404242] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  745.404253] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2e86\x0d
+[32m[  745.404264] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x25\x0d
+[32m[  745.404275] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x7da7\x0d
+[32m[  745.404286] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,139,0,139,2591
+[32m[  745.404482] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  745.404489] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  745.409854] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4893 AUX_VCHRIN_AP=4859
+[32m[  745.411539] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4888 AUX_VCHRIN_AP=4859
+[32m[  745.412323] [0m(0)[184:bat_routine_thr][force_get_tbat] 475,475,1,82,10,45
+[32m[  745.412594] [0m(0)[184:bat_routine_thr]AvgVbat=(4367),bat_vol=(4371),AvgI=(203),I=(205),VChr=(4888),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  745.416570] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  745.416577] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  745.416584] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  745.416592] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  745.418224] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  745.418235] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  745.418243] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  745.418857] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  745.418865] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4888, boot_mode=0\x0d
+[32m[  745.418873] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  747.190836] [33m(0)[293:logd.auditd]type=1400 audit(1587562812.065:598)[0m: avc: denied { getattr } for pid=310 comm="healthd" path="/sys/devices/platform/battery/power_supply/battery/present" dev="sysfs" ino=12241 scontext=u:r:healthd:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[32m[  747.190884] [33m(0)[293:logd.auditd]type=1400 audit(1587563171.955:599)[0m: avc: denied { read } for pid=318 comm="health@2.0-serv" name="present" dev="sysfs" ino=12241 scontext=u:r:hal_health_default:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[32m[  747.191100] [33m(0)[293:logd.auditd]type=1400 audit(1587563171.955:599)[0m: avc: denied { read } for pid=318 comm="health@2.0-serv" name="present" dev="sysfs" ino=12241 scontext=u:r:hal_health_default:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[32m[  747.191114] [33m(0)[293:logd.auditd]type=1400 audit(1587563171.955:600)[0m: avc: denied { open } for pid=318 comm="health@2.0-serv" path="/sys/devices/platform/battery/power_supply/battery/present" dev="sysfs" ino=12241 scontext=u:r:hal_health_default:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[32m[  747.191171] [33m(0)[293:logd.auditd]type=1400 audit(1587563171.955:600)[0m: avc: denied { open } for pid=318 comm="health@2.0-serv" path="/sys/devices/platform/battery/power_supply/battery/present" dev="sysfs" ino=12241 scontext=u:r:hal_health_default:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[32m[  747.191186] [33m(0)[293:logd.auditd]type=1400 audit(1587563171.955:601)[0m: avc: denied { getattr } for pid=318 comm="health@2.0-serv" path="/sys/devices/platform/battery/power_supply/battery/present" dev="sysfs" ino=12241 scontext=u:r:hal_health_default:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[32m[  752.433473] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  752.434539] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  752.435138] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  752.435146] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  752.435156] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  752.435164] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  752.438167] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  752.451177] [0m(0)[167:kworker/0:1][battery]
+[32m[  752.451187] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  752.463524] [0m(0)[167:kworker/0:1][battery]
+[32m[  754.724431] [33m-(0)[0:swapper/0][Power/swap] CNT(dpidle,rgidle)[0m: [0] = (0,88513), [1] = (0,45916), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  754.724457] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_cnt[0m: [by_cpu] = 0, [by_clk] = 1473, [by_tmr] = 0, [by_oth] = 0, [by_vtg] = 0,
+[32m[  754.724470] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_mask[0m: 0x00000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  755.216501] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=745 current_time=755 duration=10
+[32m[  755.216555] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  755.259186] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  755.388889] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  755.391847] [0m(0)[355:fuelgauged][force_get_tbat] 475,474,1,124,10,45
+[32m[  755.392271] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  755.392283] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2f26\x0d
+[32m[  755.392297] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x26\x0d
+[32m[  755.392308] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0xa792\x0d
+[32m[  755.392369] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  755.392394] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1245,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  755.392421] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]-1,144,0,2591,2539,2577,1139,-352494185-2591,2539,2577,45,44,1245,1139,99-3400,116,3599,45,44,1245,1139,100
+[32m[  755.392493] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  755.393554] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  755.393573] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  755.393617] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  755.393699] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  755.393712] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  755.393920] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  755.393932] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2f26\x0d
+[32m[  755.393942] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x26\x0d
+[32m[  755.393952] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0xa792\x0d
+[32m[  755.393962] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,144,0,144,2591
+[32m[  755.394161] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  755.394169] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  755.408161] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4873 AUX_VCHRIN_AP=4843
+[32m[  755.409768] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4875 AUX_VCHRIN_AP=4843
+[32m[  755.410518] [0m(0)[184:bat_routine_thr][force_get_tbat] 479,479,1,67,10,44
+[32m[  755.410773] [0m(0)[184:bat_routine_thr]AvgVbat=(4366),bat_vol=(4365),AvgI=(201),I=(191),VChr=(4875),AvgT=(44),T=(44),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  755.413855] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  755.413865] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  755.413873] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  755.413881] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  755.415521] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  755.415532] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  755.415540] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  755.416156] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  755.416164] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4875, boot_mode=0\x0d
+[32m[  755.416172] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  756.810646] [33m(0)[2073:iptables]iptables[2073][0m: syscall 278
+[32m[  756.810669] [33m(0)[2073:iptables]Code[0m: 54f4a4a8 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  756.810684] [33m(0)[2073:iptables]CPU[0m: 0 PID: 2073 Comm: iptables Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  756.810694] [33m(0)[2073:iptables]task[0m: ffffffc05d1a8000 ti: ffffffc04c554000 task.ti: ffffffc04c554000
+[32m[  756.810703] [0m(0)[2073:iptables]PC is at 0x7cff58aca4
+[32m[  756.810709] [0m(0)[2073:iptables]LR is at 0x7cff580740
+[32m[  756.810717] [33m(0)[2073:iptables]pc [0m: [<0000007cff58aca4>] lr : [<0000007cff580740>] pstate: 80000000
+[32m[  756.810723] [33m(0)[2073:iptables]sp [0m: 0000007fec8c6a80
+[32m[  756.810730] [33m(0)[2073:iptables]x29[0m: 0000007fec8c6ac0 x28: 0000007fec8c7eb0
+[32m[  756.810742] [33m(0)[2073:iptables]x27[0m: 0000000000000000 x26: 0000000000000000
+[32m[  756.810752] [33m(0)[2073:iptables]x25[0m: 0000000000000000 x24: 0000000000000000
+[32m[  756.810763] [33m(0)[2073:iptables]x23[0m: 0000000000000028 x22: 0000007fec8c6ad8
+[32m[  756.810773] [33m(0)[2073:iptables]x21[0m: 0000007fec8c6ad8 x20: 0000000000000028
+[32m[  756.810783] [33m(0)[2073:iptables]x19[0m: 0000007cff6005f0 x18: 0000000000000000
+[32m[  756.810792] [33m(0)[2073:iptables]x17[0m: 0000000000000000 x16: 0000000000000000
+[32m[  756.810801] [33m(0)[2073:iptables]x15[0m: 0000000000000000 x14: 0000000000000000
+[32m[  756.810811] [33m(0)[2073:iptables]x13[0m: 0000000000000000 x12: 0000007cff4ab708
+[32m[  756.810821] [33m(0)[2073:iptables]x11[0m: 00000000000006e8 x10: 0000007cff600000
+[32m[  756.810830] [33m(0)[2073:iptables]x9 [0m: 0000007cff6068bc x8 : 0000000000000116
+[32m[  756.810840] [33m(0)[2073:iptables]x7 [0m: 0000000000000000 x6 : 0000000000000000
+[32m[  756.810850] [33m(0)[2073:iptables]x5 [0m: 0000000000000000 x4 : 0000000000000000
+[32m[  756.810860] [33m(0)[2073:iptables]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  756.810869] [33m(0)[2073:iptables]x1 [0m: 0000000000000028 x0 : 0000007fec8c6ad8
+[32m[  756.810880] [0m(0)[2073:iptables]
+[32m[  757.017970] [33m(0)[2073:iptables]iptables[2073][0m: syscall 278
+[32m[  757.017992] [33m(0)[2073:iptables]Code[0m: 54ffbf08 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  757.018005] [33m(0)[2073:iptables]CPU[0m: 0 PID: 2073 Comm: iptables Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  757.018016] [33m(0)[2073:iptables]task[0m: ffffffc05d1a8000 ti: ffffffc04c554000 task.ti: ffffffc04c554000
+[32m[  757.018024] [0m(0)[2073:iptables]PC is at 0x7cfdfed788
+[32m[  757.018030] [0m(0)[2073:iptables]LR is at 0x7cfdfa4fe8
+[32m[  757.018038] [33m(0)[2073:iptables]pc [0m: [<0000007cfdfed788>] lr : [<0000007cfdfa4fe8>] pstate: 80000000
+[32m[  757.018044] [33m(0)[2073:iptables]sp [0m: 0000007fec8c66f0
+[32m[  757.018051] [33m(0)[2073:iptables]x29[0m: 0000007fec8c6730 x28: 0000007cfe0282c0
+[32m[  757.018063] [33m(0)[2073:iptables]x27[0m: 0000000000000004 x26: 0000000000000002
+[32m[  757.018073] [33m(0)[2073:iptables]x25[0m: 0000007cff5fc000 x24: 0000000000000000
+[32m[  757.018082] [33m(0)[2073:iptables]x23[0m: 0000000000000028 x22: 0000007fec8c6748
+[32m[  757.018093] [33m(0)[2073:iptables]x21[0m: 0000007fec8c6748 x20: 0000000000000028
+[32m[  757.018102] [33m(0)[2073:iptables]x19[0m: 0000007cff6005f0 x18: 0000000000000000
+[32m[  757.018112] [33m(0)[2073:iptables]x17[0m: 0000007cfdfed780 x16: 0000007cfe06f4e0
+[32m[  757.018122] [33m(0)[2073:iptables]x15[0m: 0000007cff25b000 x14: 0000000000000000
+[32m[  757.018132] [33m(0)[2073:iptables]x13[0m: 000000006474e550 x12: 0000007cff5ee128
+[32m[  757.018142] [33m(0)[2073:iptables]x11[0m: 000000000000000d x10: 0000007cfe076000
+[32m[  757.018152] [33m(0)[2073:iptables]x9 [0m: 0000007cfe07ba08 x8 : 0000000000000116
+[32m[  757.018162] [33m(0)[2073:iptables]x7 [0m: 00000000015c7114 x6 : 00060c1ee55f0034
+[32m[  757.018172] [33m(0)[2073:iptables]x5 [0m: 34005f651e0c0600 x4 : 0000008000000000
+[32m[  757.018183] [33m(0)[2073:iptables]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  757.018193] [33m(0)[2073:iptables]x1 [0m: 0000000000000028 x0 : 0000007fec8c6748
+[32m[  757.018203] [0m(0)[2073:iptables]
+[32m[  759.190453] [33m-(1)[0:swapper/1]CPU1[0m: Booted secondary processor
+[32m[  759.190501] [33m-(1)[0:swapper/1]CPU1[0m: thread -1, cpu 1, socket 0, mpidr 80000001
+[32m[  759.190869] [31m(0)[110:hps_main][WDK]cpu 1 plug on kick wdt
+[32m[  759.191142] [0m(0)[110:hps_main][HPS] (0080)(2)action end(97)(136)(0)(1) (8)(8)(8)(8)(1) (195)(363)(1) (0)(0)(0) (0)(136)(363)(0)(136)
+[32m[  759.762211] [33m-(0)[0:swapper/0][Power/swap] CNT(soidle,rgidle)[0m: [0] = (0,88704), [1] = (0,45958), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  759.762252] [33m-(0)[0:swapper/0][Power/swap] soidle_block_cnt[0m: [by_cpu] = 28, [by_clk] = 0, [by_tmr] = 0, [by_oth] = 1424, [by_vtg] = 0,
+[32m[  759.762279] [33m-(0)[0:swapper/0][Power/swap] soidle_block_mask[0m: 0x02000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  762.383675] [33m(1)[110:hps_main]MobiCore mcd[0m: Cpu 1 is going to die
+[32m[  762.500894] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  762.502972] [33m(0)[110:hps_main]CPU1[0m: shutdown
+[32m[  762.503268] [31m(0)[110:hps_main][WDK]cpu 1 plug off, kick wdt
+[32m[  762.504052] [33m(0)[110:hps_main]MobiCore mcd[0m: Cpu 1 is dead
+[32m[  762.504410] [0m(0)[110:hps_main][HPS] (0200)(1)action end(69)(90)(0)(0) (8)(8)(8)(8)(1) (144)(8)(0) (586)(8)(0) (0)(90)(8)(0)(90)
+[32m[  762.504980] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  762.505597] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  762.505614] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  762.505630] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  762.505644] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  762.509695] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  762.522441] [0m(0)[167:kworker/0:1][battery]
+[32m[  762.522461] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  762.535515] [0m(0)[167:kworker/0:1][battery]
+[32m[  763.143463] [0m-(0)[0:swapper/0][printk_delayed:start]
+[32m[  763.143490] [33m-(0)[0:swapper/0][WDK][0m: kick Ex WDT,RT[763133560197]
+[32m[  763.143502] [0m-(0)[0:swapper/0][printk_delayed:done]
+[32m[  763.918469] [33m(0)[2075:iptables]iptables[2075][0m: syscall 278
+[32m[  763.918501] [33m(0)[2075:iptables]Code[0m: 54f4a4a8 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  763.918524] [33m(0)[2075:iptables]CPU[0m: 0 PID: 2075 Comm: iptables Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  763.918542] [33m(0)[2075:iptables]task[0m: ffffffc066576000 ti: ffffffc0569a4000 task.ti: ffffffc0569a4000
+[32m[  763.918558] [0m(0)[2075:iptables]PC is at 0x7ededc9ca4
+[32m[  763.918571] [0m(0)[2075:iptables]LR is at 0x7ededbf740
+[32m[  763.918585] [33m(0)[2075:iptables]pc [0m: [<0000007ededc9ca4>] lr : [<0000007ededbf740>] pstate: 80000000
+[32m[  763.918597] [33m(0)[2075:iptables]sp [0m: 0000007fea951640
+[32m[  763.918609] [33m(0)[2075:iptables]x29[0m: 0000007fea951680 x28: 0000007fea952a70
+[32m[  763.918630] [33m(0)[2075:iptables]x27[0m: 0000000000000000 x26: 0000000000000000
+[32m[  763.918647] [33m(0)[2075:iptables]x25[0m: 0000000000000000 x24: 0000000000000000
+[32m[  763.918665] [33m(0)[2075:iptables]x23[0m: 0000000000000028 x22: 0000007fea951698
+[32m[  763.918684] [33m(0)[2075:iptables]x21[0m: 0000007fea951698 x20: 0000000000000028
+[32m[  763.918701] [33m(0)[2075:iptables]x19[0m: 0000007edee3f5f0 x18: 0000000000000000
+[32m[  763.918719] [33m(0)[2075:iptables]x17[0m: 0000000000000000 x16: 0000000000000000
+[32m[  763.918737] [33m(0)[2075:iptables]x15[0m: 0000000000000000 x14: 0000000000000000
+[32m[  763.918754] [33m(0)[2075:iptables]x13[0m: 0000000000000000 x12: 0000007edecea708
+[32m[  763.918773] [33m(0)[2075:iptables]x11[0m: 00000000000006e8 x10: 0000007edee3f000
+[32m[  763.918791] [33m(0)[2075:iptables]x9 [0m: 0000007edee458bc x8 : 0000000000000116
+[32m[  763.918808] [33m(0)[2075:iptables]x7 [0m: 0000000000000000 x6 : 0000000000000000
+[32m[  763.918826] [33m(0)[2075:iptables]x5 [0m: 0000000000000000 x4 : 0000000000000000
+[32m[  763.918843] [33m(0)[2075:iptables]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  763.918860] [33m(0)[2075:iptables]x1 [0m: 0000000000000028 x0 : 0000007fea951698
+[32m[  763.918879] [0m(0)[2075:iptables]
+[32m[  764.128496] [33m(0)[2075:iptables]iptables[2075][0m: syscall 278
+[32m[  764.128520] [33m(0)[2075:iptables]Code[0m: 54ffbf08 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  764.128534] [33m(0)[2075:iptables]CPU[0m: 0 PID: 2075 Comm: iptables Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  764.128544] [33m(0)[2075:iptables]task[0m: ffffffc066576000 ti: ffffffc0569a4000 task.ti: ffffffc0569a4000
+[32m[  764.128552] [0m(0)[2075:iptables]PC is at 0x7ede031788
+[32m[  764.128559] [0m(0)[2075:iptables]LR is at 0x7eddfe8fe8
+[32m[  764.128566] [33m(0)[2075:iptables]pc [0m: [<0000007ede031788>] lr : [<0000007eddfe8fe8>] pstate: 80000000
+[32m[  764.128573] [33m(0)[2075:iptables]sp [0m: 0000007fea9512b0
+[32m[  764.128579] [33m(0)[2075:iptables]x29[0m: 0000007fea9512f0 x28: 0000007ede06c2c0
+[32m[  764.128591] [33m(0)[2075:iptables]x27[0m: 0000000000000004 x26: 0000000000000002
+[32m[  764.128601] [33m(0)[2075:iptables]x25[0m: 0000007edee3b000 x24: 0000000000000000
+[32m[  764.128611] [33m(0)[2075:iptables]x23[0m: 0000000000000028 x22: 0000007fea951308
+[32m[  764.128621] [33m(0)[2075:iptables]x21[0m: 0000007fea951308 x20: 0000000000000028
+[32m[  764.128630] [33m(0)[2075:iptables]x19[0m: 0000007edee3f5f0 x18: 0000000000000000
+[32m[  764.128641] [33m(0)[2075:iptables]x17[0m: 0000007ede031780 x16: 0000007ede0b34e0
+[32m[  764.128650] [33m(0)[2075:iptables]x15[0m: 0000007edea9a000 x14: 0000000000000000
+[32m[  764.128660] [33m(0)[2075:iptables]x13[0m: 000000006474e550 x12: 0000007edee2d128
+[32m[  764.128669] [33m(0)[2075:iptables]x11[0m: 000000000000000d x10: 0000007ede0ba000
+[32m[  764.128679] [33m(0)[2075:iptables]x9 [0m: 0000007ede0bfa08 x8 : 0000000000000116
+[32m[  764.128689] [33m(0)[2075:iptables]x7 [0m: 0000000000e40114 x6 : 00060c1ee55f0034
+[32m[  764.128699] [33m(0)[2075:iptables]x5 [0m: 34005f651e0c0600 x4 : 0000008000000000
+[32m[  764.128709] [33m(0)[2075:iptables]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  764.128719] [33m(0)[2075:iptables]x1 [0m: 0000000000000028 x0 : 0000007fea951308
+[32m[  764.128729] [0m(0)[2075:iptables]
+[32m[  765.234715] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=755 current_time=765 duration=10
+[32m[  765.234775] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  765.277411] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  765.449958] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  765.465093] [0m(0)[355:fuelgauged][force_get_tbat] 475,474,1,101,10,45
+[32m[  765.465535] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  765.465548] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2fc7\x0d
+[32m[  765.465559] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x27\x0d
+[32m[  765.465570] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0xcd83\x0d
+[32m[  765.465635] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  765.465659] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1012,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  765.465687] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]-1,147,0,2591,2539,2577,1138,-352494185-2591,2539,2577,45,44,1012,1138,99-3400,116,3599,45,44,1012,1138,100
+[32m[  765.465762] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  765.470147] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  765.470163] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  765.470209] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  765.470287] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  765.470302] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  765.470542] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  765.470554] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x2fc7\x0d
+[32m[  765.470565] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x27\x0d
+[32m[  765.470575] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0xcd83\x0d
+[32m[  765.470584] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,147,0,147,2591
+[32m[  765.470781] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  765.470789] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  765.470949] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4864 AUX_VCHRIN_AP=4804
+[32m[  765.472836] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4862 AUX_VCHRIN_AP=4843
+[32m[  765.475320] [0m(0)[184:bat_routine_thr][force_get_tbat] 471,471,1,93,10,45
+[32m[  765.475595] [0m(0)[184:bat_routine_thr]AvgVbat=(4367),bat_vol=(4370),AvgI=(201),I=(205),VChr=(4862),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  765.478680] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  765.478687] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  765.478694] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  765.478702] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  765.480356] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  765.480368] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  765.480376] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  765.480992] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  765.480999] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4862, boot_mode=0\x0d
+[32m[  765.481006] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  767.578908] [33m(0)[2076:iptables]iptables[2076][0m: syscall 278
+[32m[  767.578932] [33m(0)[2076:iptables]Code[0m: 54f4a4a8 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  767.578946] [33m(0)[2076:iptables]CPU[0m: 0 PID: 2076 Comm: iptables Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  767.578957] [33m(0)[2076:iptables]task[0m: ffffffc066576000 ti: ffffffc0569a4000 task.ti: ffffffc0569a4000
+[32m[  767.578966] [0m(0)[2076:iptables]PC is at 0x7dd8ee5ca4
+[32m[  767.578972] [0m(0)[2076:iptables]LR is at 0x7dd8edb740
+[32m[  767.578979] [33m(0)[2076:iptables]pc [0m: [<0000007dd8ee5ca4>] lr : [<0000007dd8edb740>] pstate: 80000000
+[32m[  767.578985] [33m(0)[2076:iptables]sp [0m: 0000007fd6e133a0
+[32m[  767.578991] [33m(0)[2076:iptables]x29[0m: 0000007fd6e133e0 x28: 0000007fd6e147d0
+[32m[  767.579003] [33m(0)[2076:iptables]x27[0m: 0000000000000000 x26: 0000000000000000
+[32m[  767.579013] [33m(0)[2076:iptables]x25[0m: 0000000000000000 x24: 0000000000000000
+[32m[  767.579023] [33m(0)[2076:iptables]x23[0m: 0000000000000028 x22: 0000007fd6e133f8
+[32m[  767.579033] [33m(0)[2076:iptables]x21[0m: 0000007fd6e133f8 x20: 0000000000000028
+[32m[  767.579043] [33m(0)[2076:iptables]x19[0m: 0000007dd8f5b5f0 x18: 0000000000000000
+[32m[  767.579052] [33m(0)[2076:iptables]x17[0m: 0000000000000000 x16: 0000000000000000
+[32m[  767.579062] [33m(0)[2076:iptables]x15[0m: 0000000000000000 x14: 0000000000000000
+[32m[  767.579072] [33m(0)[2076:iptables]x13[0m: 0000000000000000 x12: 0000007dd8e06708
+[32m[  767.579082] [33m(0)[2076:iptables]x11[0m: 00000000000006e8 x10: 0000007dd8f5b000
+[32m[  767.579092] [33m(0)[2076:iptables]x9 [0m: 0000007dd8f618bc x8 : 0000000000000116
+[32m[  767.579101] [33m(0)[2076:iptables]x7 [0m: 0000000000000000 x6 : 0000000000000000
+[32m[  767.579111] [33m(0)[2076:iptables]x5 [0m: 0000000000000000 x4 : 0000000000000000
+[32m[  767.579120] [33m(0)[2076:iptables]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  767.579130] [33m(0)[2076:iptables]x1 [0m: 0000000000000028 x0 : 0000007fd6e133f8
+[32m[  767.579140] [0m(0)[2076:iptables]
+[32m[  767.659525] [33m(0)[2076:iptables]iptables[2076][0m: syscall 278
+[32m[  767.659548] [33m(0)[2076:iptables]Code[0m: 54ffbf08 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  767.659562] [33m(0)[2076:iptables]CPU[0m: 0 PID: 2076 Comm: iptables Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  767.659573] [33m(0)[2076:iptables]task[0m: ffffffc066576000 ti: ffffffc0569a4000 task.ti: ffffffc0569a4000
+[32m[  767.659583] [0m(0)[2076:iptables]PC is at 0x7dd68af788
+[32m[  767.659589] [0m(0)[2076:iptables]LR is at 0x7dd6866fe8
+[32m[  767.659597] [33m(0)[2076:iptables]pc [0m: [<0000007dd68af788>] lr : [<0000007dd6866fe8>] pstate: 80000000
+[32m[  767.659603] [33m(0)[2076:iptables]sp [0m: 0000007fd6e13010
+[32m[  767.659609] [33m(0)[2076:iptables]x29[0m: 0000007fd6e13050 x28: 0000007dd68ea2c0
+[32m[  767.659621] [33m(0)[2076:iptables]x27[0m: 0000000000000004 x26: 0000000000000016
+[32m[  767.659632] [33m(0)[2076:iptables]x25[0m: 0000007dd8f57000 x24: 0000000000000000
+[32m[  767.659641] [33m(0)[2076:iptables]x23[0m: 0000000000000028 x22: 0000007fd6e13068
+[32m[  767.659651] [33m(0)[2076:iptables]x21[0m: 0000007fd6e13068 x20: 0000000000000028
+[32m[  767.659660] [33m(0)[2076:iptables]x19[0m: 0000007dd8f5b5f0 x18: 0000000000000000
+[32m[  767.659670] [33m(0)[2076:iptables]x17[0m: 0000007dd68af780 x16: 0000007dd69314e0
+[32m[  767.659679] [33m(0)[2076:iptables]x15[0m: 0000007dd8bb6000 x14: 0000000000000000
+[32m[  767.659690] [33m(0)[2076:iptables]x13[0m: 000000006474e550 x12: 0000007dd8f49128
+[32m[  767.659699] [33m(0)[2076:iptables]x11[0m: 000000000000000d x10: 0000007dd6938000
+[32m[  767.659709] [33m(0)[2076:iptables]x9 [0m: 0000007dd693da08 x8 : 0000000000000116
+[32m[  767.659719] [33m(0)[2076:iptables]x7 [0m: 000000000e7a2114 x6 : 00060c1ee55f0034
+[32m[  767.659728] [33m(0)[2076:iptables]x5 [0m: 34005f651e0c0600 x4 : 0000008000000000
+[32m[  767.659737] [33m(0)[2076:iptables]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  767.659748] [33m(0)[2076:iptables]x1 [0m: 0000000000000028 x0 : 0000007fd6e13068
+[32m[  767.659757] [0m(0)[2076:iptables]
+[32m[  772.577205] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  772.791742] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  772.792346] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  772.792354] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  772.792365] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  772.792372] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  772.799104] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  772.811553] [0m(0)[167:kworker/0:1][battery]
+[32m[  772.811563] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  772.823909] [0m(0)[167:kworker/0:1][battery]
+[32m[  775.255137] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=765 current_time=775 duration=10
+[32m[  775.255197] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  775.297904] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  775.341491] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  775.354816] [0m(0)[355:fuelgauged][force_get_tbat] 479,478,1,102,10,44
+[32m[  775.355237] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  775.355249] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x3066\x0d
+[32m[  775.355260] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x28\x0d
+[32m[  775.355270] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0xf0da\x0d
+[32m[  775.355329] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  775.355354] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1024,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  775.355382] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]-1,153,0,2591,2539,2577,1139,-352494185-2591,2539,2577,44,44,1024,1139,99-3400,116,3599,44,44,1024,1139,100
+[32m[  775.355455] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  775.356435] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  775.356451] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  775.356496] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  775.356570] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  775.356583] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  775.356795] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  775.356806] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x3066\x0d
+[32m[  775.356817] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x28\x0d
+[32m[  775.356828] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0xf0da\x0d
+[32m[  775.356838] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,153,0,153,2591
+[32m[  775.357033] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  775.357057] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  775.361666] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4868 AUX_VCHRIN_AP=4843
+[32m[  775.364664] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4868 AUX_VCHRIN_AP=4828
+[32m[  775.365397] [0m(0)[184:bat_routine_thr][force_get_tbat] 475,474,1,102,10,45
+[32m[  775.365667] [0m(0)[184:bat_routine_thr]AvgVbat=(4367),bat_vol=(4371),AvgI=(201),I=(205),VChr=(4868),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  775.368752] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  775.368760] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  775.368767] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  775.368775] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  775.372177] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  775.372194] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  775.372201] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  775.372817] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  775.372824] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4868, boot_mode=0\x0d
+[32m[  775.372832] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  782.840106] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  782.841797] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  782.842395] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  782.842402] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  782.842411] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  782.842418] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  782.845440] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  782.857777] [0m(0)[167:kworker/0:1][battery]
+[32m[  782.857784] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  782.870120] [0m(0)[167:kworker/0:1][battery]
+[32m[  783.153452] [0m-(0)[74:cfinteractive][printk_delayed:start]
+[32m[  783.153474] [33m-(0)[74:cfinteractive][WDK][0m: kick Ex WDT,RT[783147632736]
+[32m[  783.153486] [0m-(0)[74:cfinteractive][printk_delayed:done]
+[32m[  784.733586] [33m-(0)[0:swapper/0][Power/swap] CNT(dpidle,rgidle)[0m: [0] = (0,90033), [1] = (0,46293), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  784.733616] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_cnt[0m: [by_cpu] = 581, [by_clk] = 1316, [by_tmr] = 0, [by_oth] = 0, [by_vtg] = 0,
+[32m[  784.733635] [33m-(0)[0:swapper/0][Power/swap] dpidle_block_mask[0m: 0x01000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  785.262114] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=775 current_time=785 duration=10
+[32m[  785.262168] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  785.262901] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  785.391953] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  785.404849] [0m(0)[355:fuelgauged][force_get_tbat] 476,475,1,100,10,45
+[32m[  785.405277] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  785.405289] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x3106\x0d
+[32m[  785.405300] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x2a\x0d
+[32m[  785.405312] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x1a61\x0d
+[32m[  785.405368] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  785.405393] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1009,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  785.405420] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]-1,156,0,2591,2539,2577,1141,-352494185-2591,2539,2577,45,44,1009,1141,99-3400,116,3599,45,44,1009,1141,100
+[32m[  785.405494] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  785.406474] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  785.406490] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  785.406536] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  785.406613] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  785.406626] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  785.406839] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  785.406850] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x3106\x0d
+[32m[  785.406862] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x2a\x0d
+[32m[  785.406873] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x1a61\x0d
+[32m[  785.406883] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,156,0,156,2591
+[32m[  785.407073] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  785.407081] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  785.409033] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4872 AUX_VCHRIN_AP=4843
+[32m[  785.410630] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4872 AUX_VCHRIN_AP=4843
+[32m[  785.411407] [0m(0)[184:bat_routine_thr][force_get_tbat] 477,477,1,92,10,44
+[32m[  785.411679] [0m(0)[184:bat_routine_thr]AvgVbat=(4367),bat_vol=(4371),AvgI=(200),I=(191),VChr=(4872),AvgT=(44),T=(44),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  785.416065] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  785.416077] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  785.416084] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  785.416093] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  785.417729] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  785.417739] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  785.417747] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  785.418363] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  785.418370] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4872, boot_mode=0\x0d
+[32m[  785.418378] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  789.763509] [33m-(0)[0:swapper/0][Power/swap] CNT(soidle,rgidle)[0m: [0] = (0,90243), [1] = (0,46293), [2] = (0,30006), [3] = (0,25726), [4] = (0,18423), [5] = (0,19129), [6] = (0,14539), [7] = (0,198),
+[32m[  789.763535] [33m-(0)[0:swapper/0][Power/swap] soidle_block_cnt[0m: [by_cpu] = 176, [by_clk] = 0, [by_tmr] = 0, [by_oth] = 1363, [by_vtg] = 0,
+[32m[  789.763548] [33m-(0)[0:swapper/0][Power/swap] soidle_block_mask[0m: 0x02000400, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+[32m[  792.905273] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  792.991844] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  792.992445] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  792.992453] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  792.992463] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  792.992471] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  792.995485] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  793.007831] [0m(0)[167:kworker/0:1][battery]
+[32m[  793.007841] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  793.020174] [0m(0)[167:kworker/0:1][battery]
+[32m[  795.262151] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=785 current_time=795 duration=10
+[32m[  795.262204] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  795.262934] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  795.391951] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  795.404841] [0m(0)[355:fuelgauged][force_get_tbat] 475,474,1,101,10,45
+[32m[  795.405275] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  795.405288] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x31a6\x0d
+[32m[  795.405298] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x2b\x0d
+[32m[  795.405309] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x4476\x0d
+[32m[  795.405366] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  795.405389] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,1012,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  795.405416] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]-1,160,0,2591,2539,2577,1138,-352494185-2591,2539,2577,45,44,1012,1138,99-3400,116,3599,45,44,1012,1138,100
+[32m[  795.405496] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  795.409286] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  795.409302] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  795.409347] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  795.409440] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  795.409453] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  795.409663] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  795.409674] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x31a7\x0d
+[32m[  795.409684] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x2b\x0d
+[32m[  795.409696] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x466b\x0d
+[32m[  795.409707] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,160,0,160,2591
+[32m[  795.409909] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  795.409916] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  795.412034] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4873 AUX_VCHRIN_AP=4843
+[32m[  795.415049] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4873 AUX_VCHRIN_AP=4835
+[32m[  795.415734] [0m(0)[184:bat_routine_thr][force_get_tbat] 476,476,1,96,10,45
+[32m[  795.415996] [0m(0)[184:bat_routine_thr]AvgVbat=(4367),bat_vol=(4371),AvgI=(200),I=(205),VChr=(4873),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  795.419079] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  795.419087] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  795.419094] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  795.419103] [0m(0)[184:bat_routine_thr][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  795.420740] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  795.420750] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  795.420758] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  795.421373] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  795.421382] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4873, boot_mode=0\x0d
+[32m[  795.421389] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  803.062650] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc
+[32m[  803.192512] [0m(0)[167:kworker/0:1][battery]AP_temp=45000, screen_on=0,bq->vbus_type=1, is_max_charge=0
+[32m[  803.193116] [0m(0)[167:kworker/0:1]tusb test cable type 40
+[32m[  803.193123] [0m(0)[167:kworker/0:1][battery]bq2589x_monitor_workfunc max_cable=0 jeita_input_limit=50000
+[32m[  803.193132] [0m(0)[167:kworker/0:1][battery]bq25890_charging_curernt_set_external set current =50000, vbus_voltage_flag= 0x0
+[32m[  803.193140] [0m(0)[167:kworker/0:1][battery]set current = 500
+[32m[  803.193441] [0m-(0)[186:mtk charger_hv_][printk_delayed:start]
+[32m[  803.193447] [33m-(0)[186:mtk charger_hv_][WDK][0m: kick Ex WDT,RT[803190190045]
+[32m[  803.193453] [0m-(0)[186:mtk charger_hv_][printk_delayed:done]
+[32m[  803.196178] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  803.465818] [0m(0)[167:kworker/0:1][battery]
+[32m[  803.465829] [0m(0)[167:kworker/0:1][battery][bq2589x]
+[32m[  803.478261] [0m(0)[167:kworker/0:1][battery]
+[32m[  805.195079] [33m(0)[2077:iptables]iptables[2077][0m: syscall 278
+[32m[  805.195101] [33m(0)[2077:iptables]Code[0m: 54f4a4a8 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  805.195116] [33m(0)[2077:iptables]CPU[0m: 0 PID: 2077 Comm: iptables Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  805.195126] [33m(0)[2077:iptables]task[0m: ffffffc066576000 ti: ffffffc0569a4000 task.ti: ffffffc0569a4000
+[32m[  805.195135] [0m(0)[2077:iptables]PC is at 0x71936d8ca4
+[32m[  805.195141] [0m(0)[2077:iptables]LR is at 0x71936ce740
+[32m[  805.195148] [33m(0)[2077:iptables]pc [0m: [<00000071936d8ca4>] lr : [<00000071936ce740>] pstate: 80000000
+[32m[  805.195154] [33m(0)[2077:iptables]sp [0m: 0000007fd437b530
+[32m[  805.195160] [33m(0)[2077:iptables]x29[0m: 0000007fd437b570 x28: 0000007fd437c960
+[32m[  805.195172] [33m(0)[2077:iptables]x27[0m: 0000000000000000 x26: 0000000000000000
+[32m[  805.195183] [33m(0)[2077:iptables]x25[0m: 0000000000000000 x24: 0000000000000000
+[32m[  805.195192] [33m(0)[2077:iptables]x23[0m: 0000000000000028 x22: 0000007fd437b588
+[32m[  805.195203] [33m(0)[2077:iptables]x21[0m: 0000007fd437b588 x20: 0000000000000028
+[32m[  805.195213] [33m(0)[2077:iptables]x19[0m: 000000719374e5f0 x18: 0000000000000000
+[32m[  805.195222] [33m(0)[2077:iptables]x17[0m: 0000000000000000 x16: 0000000000000000
+[32m[  805.195233] [33m(0)[2077:iptables]x15[0m: 0000000000000000 x14: 0000000000000000
+[32m[  805.195242] [33m(0)[2077:iptables]x13[0m: 0000000000000000 x12: 00000071935f9708
+[32m[  805.195252] [33m(0)[2077:iptables]x11[0m: 00000000000006e8 x10: 000000719374e000
+[32m[  805.195261] [33m(0)[2077:iptables]x9 [0m: 00000071937548bc x8 : 0000000000000116
+[32m[  805.195271] [33m(0)[2077:iptables]x7 [0m: 0000000000000000 x6 : 0000000000000000
+[32m[  805.195280] [33m(0)[2077:iptables]x5 [0m: 0000000000000000 x4 : 0000000000000000
+[32m[  805.195291] [33m(0)[2077:iptables]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  805.195301] [33m(0)[2077:iptables]x1 [0m: 0000000000000028 x0 : 0000007fd437b588
+[32m[  805.195311] [0m(0)[2077:iptables]
+[32m[  805.262261] [0m(0)[184:bat_routine_thr][Battery] mt_battery_update_duration_time , last_time=795 current_time=805 duration=10
+[32m[  805.262308] [0m(0)[184:bat_routine_thr][battery_meter_driver] malloc size=16
+[32m[  805.263071] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  805.263603] [0m(0)[184:bat_routine_thr][BAT_thread]Cable in, CHR_Type_num=1\x0d
+[32m[  805.268210] [0m(0)[355:fuelgauged][force_get_tbat] 475,475,1,56,10,45
+[32m[  805.268633] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  805.268644] [0m(0)[355:fuelgauged][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x3244\x0d
+[32m[  805.268658] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_31_16 = 0x2c\x0d
+[32m[  805.268668] [0m(0)[355:fuelgauged][dump_car] upmu_get_fg_car_15_00 = 0x6a76\x0d
+[32m[  805.268729] [33m(0)[355:fuelgauged]MTK_FG[0m: 1. [FGADC_CAL] % 94 V=4299, track =0
+[32m[  805.268754] [33m(0)[355:fuelgauged]MTK_FG[0m: [FGADC] 1,821,0,4299,94,100,100,2591,2591,21,0,-25,1000,0,1000,0,0,87,103,3599,100\x0d
+[32m[  805.268782] [33m(0)[355:fuelgauged]MTK_FG[0m: [fgauge_update_dod]-1,165,0,2591,2539,2577,1132,-352494185-2591,2539,2577,45,44,821,1132,99-3400,116,3599,45,44,821,1132,100
+[32m[  805.268859] [33m(0)[355:fuelgauged]MTK_FG[0m: 1.[FGADC_D0] (HW OCV 4436, HW OCV% 100, SW OCV 4299, SW OCV% 94, RTC% 100, VBAT% 89, VBAT 4248, T_avg 46, I 5103, is_charging 0, gap1 100, gap2 100, gap3 40, gap4 3, D0 0, 2:100, plugout 0)
+[32m[  805.273854] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update]soc:100 uisoc:100 uisoc2:100 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  805.273871] [33m(0)[355:fuelgauged]MTK_FG[0m: [uisoc_update_uisoc2]pseudoUI=102 ,UI_SOC2=100 ,UI_SOC=100 ,pseudo1=0 pseudo100=98 fg_coulomb_act_diff:26
+[32m[  805.273925] [33m-(0)[355:fuelgauged]mtk_rtc_hal_common[0m: rtc_spare_reg[0] = {16412, 127, 8}
+[32m[  805.274026] [33m(0)[355:fuelgauged]MTK_FG[0m: [fg_tracking]battery_tracking_time:0 left:0 type:0
+[32m[  805.274040] [33m(0)[355:fuelgauged]MTK_FG[0m: [battery_update_final]soc:100 uisoc:100 uisoc2:100 bat1:   0 bat2:   0 time:0 duraction:10 chr:1:1 batfull:0 shutdown_cond:0
+[32m[  805.274246] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_29_16 = 0x0\x0d
+[32m[  805.274257] [0m(0)[185:bat_update_thre][dump_nter] mt6332_upmu_get_fg_nter_15_00 = 0x3244\x0d
+[32m[  805.274273] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_31_16 = 0x2c\x0d
+[32m[  805.274283] [0m(0)[185:bat_update_thre][dump_car] upmu_get_fg_car_15_00 = 0x6a76\x0d
+[32m[  805.274293] [0m(0)[185:bat_update_thre]smooth_UISOC2-@@@@@@@1,100,100,0,165,0,165,2591
+[32m[  805.274490] [0m(0)[185:bat_update_thre][kernel][battery_update] SOC 100,UI_SOC2 100, status 4
+[32m[  805.274499] [0m(0)[185:bat_update_thre]wait event 2
+[32m[  805.291189] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4873 AUX_VCHRIN_AP=4843
+[32m[  805.292901] [0m(0)[184:bat_routine_thr][read_adc_v_charger] AUX_VUSB_AP = 4872 AUX_VCHRIN_AP=4843
+[32m[  805.303722] [0m(0)[184:bat_routine_thr][force_get_tbat] 474,474,1,99,10,45
+[32m[  805.304011] [0m(0)[184:bat_routine_thr]AvgVbat=(4367),bat_vol=(4368),AvgI=(200),I=(191),VChr=(4872),AvgT=(44),T=(45),pre_SOC=(-1),SOC=(100),ZCV=(4299), adcChannel=(3), adcChannelVol=(2479), batteryId=(0)
+[32m[  805.307097] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0002_VBATTEMP (0)
+[32m[  805.307105] [0m(0)[184:bat_routine_thr][BATTERY] BATTERY_NOTIFY_CASE_0005_TOTAL_CHARGINGTIME (0)
+[32m[  805.307112] [0m(0)[184:bat_routine_thr][BATTERY] support JEITA, temperature=44
+[32m[  805.307368] [33m(0)[2077:iptables]iptables[2077][0m: syscall 278
+[32m[  805.307377] [33m(0)[2077:iptables]Code[0m: 54ffbf08 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  805.307389] [33m(0)[2077:iptables]CPU[0m: 0 PID: 2077 Comm: iptables Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  805.307400] [33m(0)[2077:iptables]task[0m: ffffffc066576000 ti: ffffffc0569a4000 task.ti: ffffffc0569a4000
+[32m[  805.307409] [0m(0)[2077:iptables]PC is at 0x719276f788
+[32m[  805.307416] [0m(0)[2077:iptables]LR is at 0x7192726fe8
+[32m[  805.307425] [33m(0)[2077:iptables]pc [0m: [<000000719276f788>] lr : [<0000007192726fe8>] pstate: 80000000
+[32m[  805.307432] [33m(0)[2077:iptables]sp [0m: 0000007fd437b1a0
+[32m[  805.307120] [0m(0)[2077:iptables][BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\x0a\x0d
+[32m[  805.307481] [33m(0)[2077:iptables]x29[0m: 0000007fd437b1e0
+[32m[  805.307488] [33m(0)[2077:iptables]x28[0m: 00000071927aa2c0
+[32m[  805.307496] [33m(0)[2077:iptables]x27[0m: 0000000000000004 x26: 0000000000000002
+[32m[  805.307507] [33m(0)[2077:iptables]x25[0m: 000000719374a000 x24: 0000000000000000
+[32m[  805.307517] [33m(0)[2077:iptables]x23[0m: 0000000000000028 x22: 0000007fd437b1f8
+[32m[  805.307526] [33m(0)[2077:iptables]x21[0m: 0000007fd437b1f8 x20: 0000000000000028
+[32m[  805.307538] [33m(0)[2077:iptables]x19[0m: 000000719374e5f0 x18: 0000000000000000
+[32m[  805.307548] [33m(0)[2077:iptables]x17[0m: 000000719276f780 x16: 00000071927f14e0
+[32m[  805.307558] [33m(0)[2077:iptables]x15[0m: 00000071933a9000 x14: 0000000000000000
+[32m[  805.307569] [33m(0)[2077:iptables]x13[0m: 000000006474e550 x12: 000000719373c128
+[32m[  805.307578] [33m(0)[2077:iptables]x11[0m: 000000000000000d x10: 00000071927f8000
+[32m[  805.307589] [33m(0)[2077:iptables]x9 [0m: 00000071927fda08 x8 : 0000000000000116
+[32m[  805.307599] [33m(0)[2077:iptables]x7 [0m: 0000000001097114 x6 : 00060c1ee55f0034
+[32m[  805.307609] [33m(0)[2077:iptables]x5 [0m: 34005f651e0c0600 x4 : 0000008000000000
+[32m[  805.307619] [33m(0)[2077:iptables]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  805.307628] [33m(0)[2077:iptables]x1 [0m: 0000000000000028 x0 : 0000007fd437b1f8
+[32m[  805.307639] [0m(0)[2077:iptables]
+[32m[  805.311718] [33m(0)[2077:iptables]x_tables[31m: ip_tables: CT target: only valid in raw table, not nat
+[32m[  805.316648] [0m(0)[184:bat_routine_thr][BATTERY] bq_charge_type= 1, BMT_status.charger_type=1
+[32m[  805.316671] [33m(0)[184:bat_routine_thr][BATTERY] JEITA set charging current [0m: 50000, 50000\x0d
+[32m[  805.316678] [33m(0)[184:bat_routine_thr][BATTERY] Default CC mode charging [0m: 50000, input current = 50000\x0d
+[32m[  805.317711] [0m(0)[184:bat_routine_thr][BATTERY] charging_full_check, status = 0
+[32m[  805.317728] [0m(0)[184:bat_routine_thr][mt_kpoc_power_off_check] , chr_vol=4872, boot_mode=0\x0d
+[32m[  805.317736] [0m(0)[184:bat_routine_thr]wait event 1
+[32m[  812.744483] [33m(0)[2078:dmesg]dmesg[2078][0m: syscall 278
+[32m[  812.744505] [33m(0)[2078:dmesg]Code[0m: 54f4a4a8 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  812.744519] [33m(0)[2078:dmesg]CPU[0m: 0 PID: 2078 Comm: dmesg Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  812.744529] [33m(0)[2078:dmesg]task[0m: ffffffc066576000 ti: ffffffc0569a4000 task.ti: ffffffc0569a4000
+[32m[  812.744537] [0m(0)[2078:dmesg]PC is at 0x78b7d3aca4
+[32m[  812.744543] [0m(0)[2078:dmesg]LR is at 0x78b7d30740
+[32m[  812.744550] [33m(0)[2078:dmesg]pc [0m: [<00000078b7d3aca4>] lr : [<00000078b7d30740>] pstate: 80000000
+[32m[  812.744556] [33m(0)[2078:dmesg]sp [0m: 0000007fe76cf590
+[32m[  812.744562] [33m(0)[2078:dmesg]x29[0m: 0000007fe76cf5d0 x28: 0000007fe76d09c0
+[32m[  812.744576] [33m(0)[2078:dmesg]x27[0m: 0000000000000000 x26: 0000000000000000
+[32m[  812.744586] [33m(0)[2078:dmesg]x25[0m: 0000000000000000 x24: 0000000000000000
+[32m[  812.744595] [33m(0)[2078:dmesg]x23[0m: 0000000000000028 x22: 0000007fe76cf5e8
+[32m[  812.744606] [33m(0)[2078:dmesg]x21[0m: 0000007fe76cf5e8 x20: 0000000000000028
+[32m[  812.744616] [33m(0)[2078:dmesg]x19[0m: 00000078b7db05f0 x18: 0000000000000000
+[32m[  812.744626] [33m(0)[2078:dmesg]x17[0m: 0000000000000000 x16: 0000000000000000
+[32m[  812.744636] [33m(0)[2078:dmesg]x15[0m: 0000000000000000 x14: 0000000000000000
+[32m[  812.744646] [33m(0)[2078:dmesg]x13[0m: 0000000000000000 x12: 00000078b7c5b708
+[32m[  812.744657] [33m(0)[2078:dmesg]x11[0m: 00000000000006e8 x10: 00000078b7db0000
+[32m[  812.744667] [33m(0)[2078:dmesg]x9 [0m: 00000078b7db68bc x8 : 0000000000000116
+[32m[  812.744677] [33m(0)[2078:dmesg]x7 [0m: 0000000000000000 x6 : 0000000000000000
+[32m[  812.744687] [33m(0)[2078:dmesg]x5 [0m: 0000000000000000 x4 : 0000000000000000
+[32m[  812.744696] [33m(0)[2078:dmesg]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  812.744708] [33m(0)[2078:dmesg]x1 [0m: 0000000000000028 x0 : 0000007fe76cf5e8
+[32m[  812.744718] [0m(0)[2078:dmesg]
+[32m[  812.836284] [33m(0)[2078:dmesg]dmesg[2078][0m: syscall 278
+[32m[  812.836305] [33m(0)[2078:dmesg]Code[0m: 54ffbf08 d65f03c0 d28022c8 d4000001 (b140041f)
+[32m[  812.836320] [33m(0)[2078:dmesg]CPU[0m: 0 PID: 2078 Comm: dmesg Tainted: G        W    3.10.108-Entangled_V1.2+ #1
+[32m[  812.836330] [33m(0)[2078:dmesg]task[0m: ffffffc066576000 ti: ffffffc0569a4000 task.ti: ffffffc0569a4000
+[32m[  812.836339] [0m(0)[2078:dmesg]PC is at 0x78b77ed788
+[32m[  812.836345] [0m(0)[2078:dmesg]LR is at 0x78b77a4fe8
+[32m[  812.836353] [33m(0)[2078:dmesg]pc [0m: [<00000078b77ed788>] lr : [<00000078b77a4fe8>] pstate: 80000000
+[32m[  812.836360] [33m(0)[2078:dmesg]sp [0m: 0000007fe76cf200
+[32m[  812.836366] [33m(0)[2078:dmesg]x29[0m: 0000007fe76cf240 x28: 00000078b78282c0
+[32m[  812.836378] [33m(0)[2078:dmesg]x27[0m: 0000000000000004 x26: 0000000000000002
+[32m[  812.836389] [33m(0)[2078:dmesg]x25[0m: 00000078b7dac000 x24: 0000000000000000
+[32m[  812.836399] [33m(0)[2078:dmesg]x23[0m: 0000000000000028 x22: 0000007fe76cf258
+[32m[  812.836409] [33m(0)[2078:dmesg]x21[0m: 0000007fe76cf258 x20: 0000000000000028
+[32m[  812.836419] [33m(0)[2078:dmesg]x19[0m: 00000078b7db05f0 x18: 0000000000000000
+[32m[  812.836429] [33m(0)[2078:dmesg]x17[0m: 00000078b77ed780 x16: 00000078b786f4e0
+[32m[  812.836439] [33m(0)[2078:dmesg]x15[0m: 00000078b7a0e000 x14: 0000000000000000
+[32m[  812.836449] [33m(0)[2078:dmesg]x13[0m: 000000006474e550 x12: 00000078b7d9e128
+[32m[  812.836459] [33m(0)[2078:dmesg]x11[0m: 000000000000000d x10: 00000078b7876000
+[32m[  812.836469] [33m(0)[2078:dmesg]x9 [0m: 00000078b787ba08 x8 : 0000000000000116
+[32m[  812.836479] [33m(0)[2078:dmesg]x7 [0m: 00000000005b7114 x6 : 00060c1ee55f0034
+[32m[  812.836490] [33m(0)[2078:dmesg]x5 [0m: 34005f651e0c0600 x4 : 0000008000000000
+[32m[  812.836500] [33m(0)[2078:dmesg]x3 [0m: 0000000000000000 x2 : 0000000000000001
+[32m[  812.836509] [33m(0)[2078:dmesg]x1 [0m: 0000000000000028 x0 : 0000007fe76cf258
+[32m[  812.836520] [0m(0)[2078:dmesg]
+[32m[  813.228790] [33m-(1)[0:swapper/1]CPU1[0m: Booted secondary processor
+[32m[  813.228849] [33m-(1)[0:swapper/1]CPU1[0m: thread -1, cpu 1, socket 0, mpidr 80000001
+[32m[  813.264217] [31m(1)[110:hps_main][WDK]cpu 1 plug on kick wdt
+[32m[  813.306341] [0m(1)[110:hps_main][HPS] (0080)(2)action end(92)(351)(0)(0) (8)(8)(8)(8)(1) (191)(124)(0) (0)(0)(0) (0)(351)(124)(0)(351)
+[0mx3:/ #
