@@ -25,13 +25,15 @@
 #include <hardware/gralloc.h>
 namespace android {
 // ---------------------------------------------------------------------------
-namespace Gralloc2 {
-class Mapper;
-}
+class GrallocMapper;
 class Rect;
 class GraphicBufferMapper : public Singleton<GraphicBufferMapper>
 {
 public:
+    enum Version {
+        GRALLOC_2,
+        GRALLOC_3,
+    };
     static void preloadHal();
     static inline GraphicBufferMapper& get() { return getInstance(); }
     // The imported outHandle must be freed with freeBuffer when no longer
@@ -43,28 +45,32 @@ public:
     status_t freeBuffer(buffer_handle_t handle);
     void getTransportSize(buffer_handle_t handle,
             uint32_t* outTransportNumFds, uint32_t* outTransportNumInts);
-    status_t lock(buffer_handle_t handle,
-            uint32_t usage, const Rect& bounds, void** vaddr);
+    status_t lock(buffer_handle_t handle, uint32_t usage, const Rect& bounds, void** vaddr,
+                  int32_t* outBytesPerPixel = nullptr, int32_t* outBytesPerStride = nullptr);
     status_t lockYCbCr(buffer_handle_t handle,
             uint32_t usage, const Rect& bounds, android_ycbcr *ycbcr);
     status_t unlock(buffer_handle_t handle);
-    status_t lockAsync(buffer_handle_t handle,
-            uint32_t usage, const Rect& bounds, void** vaddr, int fenceFd);
-    status_t lockAsync(buffer_handle_t handle,
-            uint64_t producerUsage, uint64_t consumerUsage, const Rect& bounds,
-            void** vaddr, int fenceFd);
+    status_t lockAsync(buffer_handle_t handle, uint32_t usage, const Rect& bounds, void** vaddr,
+                       int fenceFd, int32_t* outBytesPerPixel = nullptr,
+                       int32_t* outBytesPerStride = nullptr);
+    status_t lockAsync(buffer_handle_t handle, uint64_t producerUsage, uint64_t consumerUsage,
+                       const Rect& bounds, void** vaddr, int fenceFd,
+                       int32_t* outBytesPerPixel = nullptr, int32_t* outBytesPerStride = nullptr);
     status_t lockAsyncYCbCr(buffer_handle_t handle,
             uint32_t usage, const Rect& bounds, android_ycbcr *ycbcr,
             int fenceFd);
     status_t unlockAsync(buffer_handle_t handle, int *fenceFd);
-    const Gralloc2::Mapper& getGrallocMapper() const
-    {
-        return *mMapper;
+    status_t isSupported(uint32_t width, uint32_t height, android::PixelFormat format,
+                         uint32_t layerCount, uint64_t usage, bool* outSupported);
+    const GrallocMapper& getGrallocMapper() const {
+        return reinterpret_cast<const GrallocMapper&>(*mMapper);
     }
+    Version getMapperVersion() const { return mMapperVersion; }
 private:
     friend class Singleton<GraphicBufferMapper>;
     GraphicBufferMapper();
-    const std::unique_ptr<const Gralloc2::Mapper> mMapper;
+    std::unique_ptr<const GrallocMapper> mMapper;
+    Version mMapperVersion;
 };
 // ---------------------------------------------------------------------------
 }; // namespace android
