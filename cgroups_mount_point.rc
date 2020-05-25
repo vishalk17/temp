@@ -1,0 +1,34 @@
+# Create cgroup mount point
+    mkdir /acct
+    mount cgroup none /acct cpuacct
+    chmod 0555 /acct
+
+	mkdir /dev/blkio
+    mount cgroup none /dev/blkio blkio
+    chown system system /dev/blkio
+    chmod 0755 /dev/blkio
+
+	mkdir /dev/cpuset
+    mount cgroup none /dev/cpuset cpuset
+    chown system system /dev/cpuset
+    chmod 0755 /dev/cpuset
+
+	mkdir /dev/cpuctl
+    mount cgroup none /dev/cpuctl cpu
+    chown system system /dev/cpuctl
+    chmod 0755 /dev/cpuctl
+
+	mkdir /dev/memcg
+    mount cgroup none /dev/memcg memory
+    chown root system /dev/memcg
+    chmod 0700 /dev/memcg
+
+	mkdir /dev/stune
+    mount cgroup none /dev/stune schedtune
+    chown system system /dev/stune
+    chmod 0755 /dev/memcg
+	
+	mkdir /dev/cg2_bpf
+    mount cgroup2 none /dev/cg2_bpf cg2_bpf
+    chown root root /dev/cg2_bpf
+    chmod 0600 /dev/cg2_bpf
