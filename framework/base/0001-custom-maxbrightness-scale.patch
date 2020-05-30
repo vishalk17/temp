@@ -1,0 +1,42 @@
+From 7469d3cedd72ec70f173c420e9b7bdd2812dafb4 Mon Sep 17 00:00:00 2001
+From: vishalk17 <vishalkapadi95@gmail.com>
+Date: Sat, 30 May 2020 17:36:41 +0000
+Subject: [PATCH] custom maxbrightness scale
+
+Change-Id: Ieeeeef4e912620cfc31847958bbfdecfc90937aa
+---
+ .../core/java/com/android/server/lights/LightsService.java    | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index 0a30884..ec8f34f 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -26,6 +26,7 @@ import android.os.Trace;
+ import android.provider.Settings;
+ import android.util.Slog;
+ import android.view.SurfaceControl;
++import android.os.SystemProperties;
+ 
+ import com.android.server.SystemService;
+ 
+@@ -88,7 +89,15 @@ public class LightsService extends SystemService {
+                     }
+                     SurfaceControl.setDisplayBrightness(mDisplayToken,
+                             (float) brightness / mSurfaceControlMaximumBrightness);
+-                } else {
++		    return;
++                }
++                    int customScale = SystemProperties.getInt("ro.custom.maxbrightness.scale", 255)
++                    if(customScale != 255) {
++                        scale = customScale;
++                     }
++                        setLightLocked(brightness * scale / 255, LIGHT_FLASH_NONE, 0, 0, brightnessMode);
++                        return;
++
+                     int color = brightness & 0x000000ff;
+                     color = 0xff000000 | (color << 16) | (color << 8) | color;
+                     setLightLocked(color, LIGHT_FLASH_NONE, 0, 0, brightnessMode);
+-- 
+2.7.4
+
