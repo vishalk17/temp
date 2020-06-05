@@ -1,0 +1,13 @@
+536870912 = 512 mb vendor partition
+16777216 = 16 mb recovery partition
+
+1048576 = 1 mb
+2097152 = 2mb
+.....
+take 4 mb from vendor and put it into recovery
+
+final things
+
+532676608 bytes ( 508 mb vendor partition ) // hex value = 0x1FC00000
+
+16 mb + 4 mb = 20 mb = 20971520 bytes // hex value = 0x1400000
