@@ -4,10 +4,15 @@
 /cache		ext4		/dev/block/mmcblk0p41					flags=display="cache";formattable;backup=1
 /system	ext4		/dev/block/platform/bootdevice/by-name/system		flags=display="system";backup=1
 /system_image	emmc		/dev/block/platform/bootdevice/by-name/system		flags=display="system_image";backup=1
-/vendor	ext4		/dev/block/platform/bootdevice/by-name/vendor		flags=display="vendor";backup=1
+/vendor	ext4		/dev/block/platform/bootdevice/by-name/vendor		flags=display="vendor";formattable;backup=1
 /vendor_image	emmc		/dev/block/platform/bootdevice/by-name/vendor		flags=display="vendor_image"backup=1
 /dtbo		emmc		/dev/block/platform/bootdevice/by-name/dtbo		flags=display="dtbo";backup=1
 /odmdtbo	emmc		/dev/block/platform/bootdevice/by-name/odmdtbo	flags=display="odmdtbo";backup=1
 /vbmeta	emmc		/dev/block/platform/bootdevice/by-name/vbmeta		flags=display="vbmeta";backup=1
+/nvcfg	emmc		/dev/block/platform/bootdevice/by-name/nvcfg	flags=display="nvcfg";backup=1
+/nvdata	emmc		/dev/block/platform/bootdevice/by-name/nvdata	flags=display="nvdata";backup=1
+/nvram	emmc		/dev/block/platform/bootdevice/by-name/nvram	flags=display="nvram";backup=1
+/para	emmc		/dev/block/platform/bootdevice/by-name/para	flags=display="para";backup=1
+/persist	emmc		/dev/block/platform/bootdevice/by-name/persist	flags=display="persist";backup=1
 /sdcard1	auto		/dev/block/mmcblk1p1					flags=display="external_sd";backup=1;storage;wipeingui;removable
 auto		vfat		/devices/platform/11200000.usb3_xhci*			flags=display="USB Storage";voldmanaged=usbotg:auto;backup=1;storage;wipeingui;removable
